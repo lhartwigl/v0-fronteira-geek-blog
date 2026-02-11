@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import useSWR from "swr"
-import { Upload, Sparkles, Loader2 } from "lucide-react"
+import { Upload, Sparkles, Loader2, X } from "lucide-react"
 import { RichTextEditor } from "./rich-text-editor"
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
@@ -303,6 +303,26 @@ function ImageUpload({
   return (
     <div className="flex flex-col gap-1.5">
       <span className="text-sm font-medium text-foreground">{label}</span>
+
+      {/* Preview with remove button */}
+      {value && (
+        <div className="relative w-full aspect-video rounded-md overflow-hidden border border-border bg-secondary">
+          <img
+            src={value}
+            alt={`${label} preview`}
+            className="w-full h-full object-cover"
+          />
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="absolute top-2 right-2 p-1 bg-background/80 border border-border rounded-md text-foreground hover:text-destructive hover:bg-background transition-colors"
+            title={`Remove ${label.toLowerCase()}`}
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
       <div className="flex items-center gap-2">
         <input
           type="text"
