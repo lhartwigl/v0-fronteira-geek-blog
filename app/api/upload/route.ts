@@ -1,6 +1,7 @@
 import { put } from '@vercel/blob'
 import { NextResponse, type NextRequest } from 'next/server'
 import { getSession } from '@/lib/auth'
+import { sql } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
   const session = await getSession()
@@ -20,7 +21,18 @@ export async function POST(request: NextRequest) {
       access: 'public',
     })
 
-    return NextResponse.json({ url: blob.url })
+    // Track in media table
+    await sql`
+      INSERT INTO media (url, filename, mimetype, size, uploaded_by)
+      VALUES (${blob.url}, ${file.name}, ${file.type}, ${file.size}, ${session.userId})
+    `
+
+    return NextResponse.json({
+      url: blob.url,
+      filename: file.name,
+      size: file.size,
+      type: file.type,
+    })
   } catch (error) {
     console.error('Upload error:', error)
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })

@@ -114,7 +114,9 @@ export default async function PostPage({ params }: Props) {
           prose-strong:text-foreground
           prose-code:text-primary prose-code:bg-secondary prose-code:px-1 prose-code:py-0.5 prose-code:rounded
           prose-blockquote:border-l-primary prose-blockquote:text-muted-foreground
-          prose-img:rounded-lg"
+          prose-img:rounded-lg
+          [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:rounded-lg [&_iframe]:border-0
+          [&_u]:underline [&_u]:decoration-primary/50"
         dangerouslySetInnerHTML={{ __html: post.content as string }}
       />
 

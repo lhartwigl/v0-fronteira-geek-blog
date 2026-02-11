@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import useSWR from "swr"
 import { Upload, Sparkles, Loader2 } from "lucide-react"
+import { RichTextEditor } from "./rich-text-editor"
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
@@ -231,17 +232,10 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         />
       </div>
 
-      {/* Content (WYSIWYG-like) */}
+      {/* Content - Rich Text Editor */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="content" className="text-sm font-medium text-foreground">Content (HTML supported)</label>
-        <textarea
-          id="content"
-          rows={16}
-          value={form.content}
-          onChange={(e) => updateField("content", e.target.value)}
-          className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-y font-mono leading-relaxed"
-          placeholder="Write your article content here... HTML tags are supported."
-        />
+        <label className="text-sm font-medium text-foreground">Content</label>
+        <RichTextEditor content={form.content} onChange={(html) => updateField("content", html)} />
       </div>
 
       {/* Meta Description */}
