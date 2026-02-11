@@ -1,7 +1,7 @@
 import { put } from '@vercel/blob'
 import { NextResponse, type NextRequest } from 'next/server'
 import { getSession } from '@/lib/auth'
-import { sql } from '@/lib/db'
+import { getDb } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
   const session = await getSession()
@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
     })
 
     // Track in media table
+    const sql = getDb()
     await sql`
       INSERT INTO media (url, filename, mimetype, size, uploaded_by)
       VALUES (${blob.url}, ${file.name}, ${file.type}, ${file.size}, ${session.userId})
