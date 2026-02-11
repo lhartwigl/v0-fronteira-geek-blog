@@ -1,15 +1,28 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import React from "react"
+import type { Metadata, Viewport } from 'next'
+import { Inter, Space_Grotesk } from 'next/font/google'
 
 import './globals.css'
 
-const _geist = Geist({ subsets: ['latin'] })
-const _geistMono = Geist_Mono({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: {
+    default: 'Fronteira Geek - Your Daily Dose of Geek News',
+    template: '%s | Fronteira Geek',
+  },
+  description: 'The ultimate source for geek news covering anime, games, Marvel, DC, Star Wars, RPG, and tech.',
+  openGraph: {
+    title: 'Fronteira Geek',
+    description: 'The ultimate source for geek news.',
+    siteName: 'Fronteira Geek',
+    type: 'website',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#0f1318',
 }
 
 export default function RootLayout({
@@ -18,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <body className="font-sans antialiased min-h-screen">{children}</body>
     </html>
   )
 }
