@@ -63,7 +63,7 @@ export default function AdminPostsPage() {
                         <div className="relative w-12 h-12 rounded overflow-hidden shrink-0 bg-secondary">
                           {post.thumbnail_url ? (
                             <Image
-                              src={post.thumbnail_url as string || "/placeholder.svg"}
+                              src={post.thumbnail_url as string}
                               alt=""
                               fill
                               className="object-cover"

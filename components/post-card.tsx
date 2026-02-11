@@ -23,7 +23,7 @@ export function PostCard({ post }: PostCardProps) {
       <div className="relative aspect-video overflow-hidden">
         {post.thumbnail_url ? (
           <Image
-            src={post.thumbnail_url || "/placeholder.svg"}
+            src={post.thumbnail_url}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"

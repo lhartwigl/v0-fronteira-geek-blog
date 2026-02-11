@@ -27,7 +27,7 @@ export function LatestSidebar({ posts }: { posts: LatestPost[] }) {
             <div className="relative w-16 h-16 rounded-md overflow-hidden shrink-0">
               {post.thumbnail_url ? (
                 <Image
-                  src={post.thumbnail_url || "/placeholder.svg"}
+                  src={post.thumbnail_url}
                   alt={post.title}
                   fill
                   className="object-cover"

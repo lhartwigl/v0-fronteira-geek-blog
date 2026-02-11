@@ -49,6 +49,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   const [youtubeUrl, setYoutubeUrl] = useState("")
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         heading: { levels: [1, 2, 3] },

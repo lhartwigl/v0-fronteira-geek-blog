@@ -96,7 +96,7 @@ export default async function PostPage({ params }: Props) {
       {imageUrl && (
         <div className="relative aspect-video rounded-lg overflow-hidden mb-8">
           <Image
-            src={imageUrl || "/placeholder.svg"}
+            src={imageUrl}
             alt={post.title as string}
             fill
             className="object-cover"

@@ -24,7 +24,7 @@ export function HeroPost({ post }: HeroPostProps) {
     <Link href={`/post/${post.slug}`} className="group block relative rounded-lg overflow-hidden aspect-[21/9] min-h-[320px]">
       {imageUrl ? (
         <Image
-          src={imageUrl || "/placeholder.svg"}
+          src={imageUrl}
           alt={post.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -32,7 +32,9 @@ export function HeroPost({ post }: HeroPostProps) {
           sizes="(max-width: 1280px) 100vw, 1280px"
         />
       ) : (
-        <div className="absolute inset-0 bg-secondary" />
+        <div className="absolute inset-0 bg-secondary flex items-center justify-center">
+          <span className="text-5xl font-heading font-bold text-muted-foreground/30">FG</span>
+        </div>
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
