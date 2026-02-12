@@ -50,6 +50,7 @@ export default function AdminPostsPage() {
                 <tr className="border-b border-border">
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Post</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Category</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Author</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden sm:table-cell">Status</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Date</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Clicks</th>
@@ -86,6 +87,18 @@ export default function AdminPostsPage() {
                     </td>
                     <td className="p-4 hidden md:table-cell">
                       <span className="text-sm text-muted-foreground">{(post.category_name as string) || "-"}</span>
+                    </td>
+                    <td className="p-4 hidden md:table-cell">
+                      <div className="flex items-center gap-2">
+                        {post.author_avatar ? (
+                          <img src={post.author_avatar as string} alt="" className="h-5 w-5 rounded-full object-cover" />
+                        ) : (
+                          <span className="h-5 w-5 rounded-full bg-secondary flex items-center justify-center text-[10px] font-bold text-muted-foreground">
+                            {(post.author_name as string)?.charAt(0)?.toUpperCase() || "?"}
+                          </span>
+                        )}
+                        <span className="text-sm text-muted-foreground">{(post.author_name as string) || "Unknown"}</span>
+                      </div>
                     </td>
                     <td className="p-4 hidden sm:table-cell">
                       <span

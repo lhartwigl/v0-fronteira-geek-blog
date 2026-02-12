@@ -10,9 +10,11 @@ export async function GET() {
 
   const sql = getDb()
   const posts = await sql`
-    SELECT p.*, c.name as category_name, c.slug as category_slug
+    SELECT p.*, c.name as category_name, c.slug as category_slug,
+           u.name as author_name, u.avatar_url as author_avatar
     FROM posts p
     LEFT JOIN categories c ON p.category_id = c.id
+    LEFT JOIN users u ON p.author_id = u.id
     ORDER BY p.created_at DESC
   `
   return NextResponse.json({ posts })

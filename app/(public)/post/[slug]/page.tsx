@@ -41,9 +41,11 @@ export default async function PostPage({ params }: Props) {
   const sql = getDb()
 
   const posts = await sql`
-    SELECT p.*, c.name as category_name, c.slug as category_slug
+    SELECT p.*, c.name as category_name, c.slug as category_slug,
+           u.name as author_name, u.avatar_url as author_avatar, u.bio as author_bio
     FROM posts p
     LEFT JOIN categories c ON p.category_id = c.id
+    LEFT JOIN users u ON p.author_id = u.id
     WHERE p.slug = ${slug} AND p.status = 'published'
   `
 
@@ -87,12 +89,42 @@ export default async function PostPage({ params }: Props) {
         {post.title as string}
       </h1>
 
-      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
-        <span className="flex items-center gap-1">
-          <Clock className="h-4 w-4" />
-          {post.reading_time as number} min read
-        </span>
-        <span>{timeAgo(post.created_at as string)}</span>
+      {/* Author byline */}
+      <div className="flex items-center gap-4 mb-8">
+        {post.author_name && (
+          <div className="flex items-center gap-3">
+            {post.author_avatar ? (
+              <img
+                src={post.author_avatar as string}
+                alt={post.author_name as string}
+                className="h-10 w-10 rounded-full object-cover border border-border"
+              />
+            ) : (
+              <div className="h-10 w-10 rounded-full bg-secondary border border-border flex items-center justify-center text-sm font-bold text-muted-foreground">
+                {(post.author_name as string).charAt(0).toUpperCase()}
+              </div>
+            )}
+            <div className="flex flex-col">
+              <span className="text-sm font-medium text-foreground">{post.author_name as string}</span>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span className="flex items-center gap-1">
+                  <Clock className="h-3 w-3" />
+                  {post.reading_time as number} min read
+                </span>
+                <span>{timeAgo(post.created_at as string)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+        {!post.author_name && (
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              {post.reading_time as number} min read
+            </span>
+            <span>{timeAgo(post.created_at as string)}</span>
+          </div>
+        )}
       </div>
 
       {imageUrl && (

@@ -14,6 +14,8 @@ interface PostCardProps {
     category_slug: string | null
     reading_time: number
     created_at: string
+    author_name?: string | null
+    author_avatar?: string | null
   }
 }
 
@@ -48,11 +50,22 @@ export function PostCard({ post }: PostCardProps) {
           <p className="text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>
         )}
         <div className="mt-auto flex items-center gap-3 text-xs text-muted-foreground pt-2">
+          {post.author_name && (
+            <span className="flex items-center gap-1.5">
+              {post.author_avatar ? (
+                <img src={post.author_avatar} alt={post.author_name} className="h-4 w-4 rounded-full object-cover" />
+              ) : (
+                <span className="h-4 w-4 rounded-full bg-secondary flex items-center justify-center text-[9px] font-bold text-muted-foreground">
+                  {post.author_name.charAt(0).toUpperCase()}
+                </span>
+              )}
+              <span>{post.author_name}</span>
+            </span>
+          )}
           <span className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
             {post.reading_time} min
           </span>
-          <span>{timeAgo(post.created_at)}</span>
         </div>
       </div>
     </Link>

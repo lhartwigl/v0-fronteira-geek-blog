@@ -14,6 +14,8 @@ interface HeroPostProps {
     category_slug: string | null
     reading_time: number
     created_at: string
+    author_name?: string | null
+    author_avatar?: string | null
   }
 }
 
@@ -51,9 +53,23 @@ export function HeroPost({ post }: HeroPostProps) {
             {post.excerpt}
           </p>
         )}
-        <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-          <Clock className="h-3 w-3" />
-          <span>{post.reading_time} min read</span>
+        <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
+          {post.author_name && (
+            <span className="flex items-center gap-2">
+              {post.author_avatar ? (
+                <img src={post.author_avatar} alt={post.author_name} className="h-5 w-5 rounded-full object-cover" />
+              ) : (
+                <span className="h-5 w-5 rounded-full bg-secondary flex items-center justify-center text-[10px] font-bold text-muted-foreground">
+                  {post.author_name.charAt(0).toUpperCase()}
+                </span>
+              )}
+              <span className="text-foreground font-medium">{post.author_name}</span>
+            </span>
+          )}
+          <span className="flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            {post.reading_time} min read
+          </span>
         </div>
       </div>
     </Link>

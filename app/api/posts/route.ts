@@ -17,9 +17,11 @@ export async function GET(request: Request) {
 
     if (search) {
       posts = await sql`
-        SELECT p.*, c.name as category_name, c.slug as category_slug
+        SELECT p.*, c.name as category_name, c.slug as category_slug,
+               u.name as author_name, u.avatar_url as author_avatar
         FROM posts p
         LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN users u ON p.author_id = u.id
         WHERE p.status = 'published'
           AND (p.title ILIKE ${'%' + search + '%'} OR p.content ILIKE ${'%' + search + '%'})
         ORDER BY p.created_at DESC
@@ -32,9 +34,11 @@ export async function GET(request: Request) {
       `
     } else if (category) {
       posts = await sql`
-        SELECT p.*, c.name as category_name, c.slug as category_slug
+        SELECT p.*, c.name as category_name, c.slug as category_slug,
+               u.name as author_name, u.avatar_url as author_avatar
         FROM posts p
         LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN users u ON p.author_id = u.id
         WHERE p.status = 'published' AND c.slug = ${category}
         ORDER BY p.created_at DESC
         LIMIT ${limit} OFFSET ${offset}
@@ -46,9 +50,11 @@ export async function GET(request: Request) {
       `
     } else {
       posts = await sql`
-        SELECT p.*, c.name as category_name, c.slug as category_slug
+        SELECT p.*, c.name as category_name, c.slug as category_slug,
+               u.name as author_name, u.avatar_url as author_avatar
         FROM posts p
         LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN users u ON p.author_id = u.id
         WHERE p.status = 'published'
         ORDER BY p.created_at DESC
         LIMIT ${limit} OFFSET ${offset}

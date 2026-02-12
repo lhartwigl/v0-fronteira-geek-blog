@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
-  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, X, ChevronLeft,
+  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, X, ChevronLeft, UserCircle,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -13,6 +13,7 @@ const links = [
   { href: "/admin/posts/new", label: "Create Post", icon: PenSquare },
   { href: "/admin/categories", label: "Categories", icon: FolderOpen },
   { href: "/admin/media", label: "Media", icon: ImageIcon },
+  { href: "/admin/profile", label: "Profile", icon: UserCircle },
 ]
 
 export function AdminSidebar({ userEmail }: { userEmail: string }) {
