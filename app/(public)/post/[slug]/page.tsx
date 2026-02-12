@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Clock, ArrowLeft } from "lucide-react"
 import { timeAgo } from "@/lib/format"
 import { PostCard } from "@/components/post-card"
+import { TrackClick } from "@/components/track-click"
 import type { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
@@ -64,6 +65,7 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <article className="mx-auto max-w-4xl px-4 py-8">
+      <TrackClick postId={post.id as number} />
       <Link
         href="/"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"

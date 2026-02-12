@@ -3,7 +3,7 @@
 import useSWR, { mutate } from "swr"
 import Link from "next/link"
 import Image from "next/image"
-import { Pencil, Trash2, Plus } from "lucide-react"
+import { Pencil, Trash2, Plus, MousePointerClick } from "lucide-react"
 import { timeAgo } from "@/lib/format"
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
@@ -52,6 +52,7 @@ export default function AdminPostsPage() {
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Category</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden sm:table-cell">Status</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Date</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Clicks</th>
                   <th className="text-right text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Actions</th>
                 </tr>
               </thead>
@@ -99,6 +100,12 @@ export default function AdminPostsPage() {
                     </td>
                     <td className="p-4 hidden lg:table-cell">
                       <span className="text-sm text-muted-foreground">{timeAgo(post.created_at as string)}</span>
+                    </td>
+                    <td className="p-4 hidden lg:table-cell">
+                      <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
+                        <MousePointerClick className="h-3.5 w-3.5" />
+                        {((post.clicks as number) || 0).toLocaleString()}
+                      </span>
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">

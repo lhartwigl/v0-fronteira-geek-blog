@@ -1,5 +1,5 @@
 import { getDb } from "@/lib/db"
-import { FileText, Eye, Layers, Users } from "lucide-react"
+import { FileText, Eye, Layers, Users, MousePointerClick } from "lucide-react"
 import Link from "next/link"
 
 export const dynamic = "force-dynamic"
@@ -7,13 +7,14 @@ export const dynamic = "force-dynamic"
 export default async function AdminDashboard() {
   const sql = getDb()
 
-  const [postsCount, publishedCount, categoriesCount, subscribersCount, recentPosts] = await Promise.all([
-    sql`SELECT COUNT(*) as count FROM posts`,
-    sql`SELECT COUNT(*) as count FROM posts WHERE status = 'published'`,
-    sql`SELECT COUNT(*) as count FROM categories`,
-    sql`SELECT COUNT(*) as count FROM subscribers`,
+  const [postsCount, publishedCount, categoriesCount, subscribersCount, totalClicks, recentPosts] = await Promise.all([
+    sql`SELECT COUNT(*)::int as count FROM posts`,
+    sql`SELECT COUNT(*)::int as count FROM posts WHERE status = 'published'`,
+    sql`SELECT COUNT(*)::int as count FROM categories`,
+    sql`SELECT COUNT(*)::int as count FROM subscribers`,
+    sql`SELECT COALESCE(SUM(clicks), 0)::int as total FROM posts`,
     sql`
-      SELECT p.id, p.title, p.status, p.created_at, c.name as category_name
+      SELECT p.id, p.title, p.status, p.clicks, p.created_at, c.name as category_name
       FROM posts p
       LEFT JOIN categories c ON p.category_id = c.id
       ORDER BY p.created_at DESC
@@ -24,6 +25,7 @@ export default async function AdminDashboard() {
   const stats = [
     { label: "Total Posts", value: postsCount[0].count, icon: FileText, color: "text-primary" },
     { label: "Published", value: publishedCount[0].count, icon: Eye, color: "text-accent" },
+    { label: "Total Clicks", value: totalClicks[0].total.toLocaleString(), icon: MousePointerClick, color: "text-emerald-400" },
     { label: "Categories", value: categoriesCount[0].count, icon: Layers, color: "text-blue-400" },
     { label: "Subscribers", value: subscribersCount[0].count, icon: Users, color: "text-purple-400" },
   ]
@@ -40,7 +42,7 @@ export default async function AdminDashboard() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
         {stats.map((stat) => (
           <div key={stat.label} className="bg-card border border-border rounded-lg p-5">
             <div className="flex items-center justify-between mb-3">
@@ -75,15 +77,21 @@ export default async function AdminDashboard() {
                     {new Date(post.created_at as string).toLocaleDateString()}
                   </p>
                 </div>
-                <span
-                  className={`shrink-0 ml-4 px-2 py-0.5 text-xs font-medium rounded-full ${
-                    post.status === "published"
-                      ? "bg-primary/20 text-primary"
-                      : "bg-secondary text-muted-foreground"
-                  }`}
-                >
-                  {post.status as string}
-                </span>
+                <div className="flex items-center gap-3 shrink-0 ml-4">
+                  <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                    <MousePointerClick className="h-3.5 w-3.5" />
+                    {((post.clicks as number) || 0).toLocaleString()}
+                  </span>
+                  <span
+                    className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                      post.status === "published"
+                        ? "bg-primary/20 text-primary"
+                        : "bg-secondary text-muted-foreground"
+                    }`}
+                  >
+                    {post.status as string}
+                  </span>
+                </div>
               </Link>
             ))}
           </div>
