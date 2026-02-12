@@ -5,14 +5,14 @@ import { useState } from "react"
 import { Menu, X, Search } from "lucide-react"
 
 const categories = [
-  { name: "Trending", slug: "trending" },
+  { name: "Destaques", slug: "trending" },
   { name: "Anime", slug: "anime" },
   { name: "Games", slug: "games" },
   { name: "Marvel", slug: "marvel" },
   { name: "DC", slug: "dc" },
   { name: "Star Wars", slug: "star-wars" },
   { name: "RPG", slug: "rpg" },
-  { name: "Tech", slug: "tech" },
+  { name: "Tecnologia", slug: "tech" },
 ]
 
 export function SiteHeader() {
@@ -46,7 +46,7 @@ export function SiteHeader() {
           <Link
             href="/search"
             className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Search"
+            aria-label="Buscar"
           >
             <Search className="h-5 w-5" />
           </Link>
@@ -54,7 +54,7 @@ export function SiteHeader() {
             type="button"
             className="lg:hidden p-2 text-muted-foreground hover:text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle navigation"
+            aria-label="Alternar navegacao"
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>

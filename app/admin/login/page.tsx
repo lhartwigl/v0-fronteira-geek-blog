@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
       router.push("/admin")
       router.refresh()
     } catch {
-      setError("Something went wrong")
+      setError("Algo deu errado")
       setLoading(false)
     }
   }
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
   if (checkingSetup) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-muted-foreground">Loading...</div>
+        <div className="text-muted-foreground">Carregando...</div>
       </div>
     )
   }
@@ -83,21 +83,21 @@ export default function AdminLoginPage() {
             <span className="text-primary">Fronteira</span> Geek
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
-            {isSetup ? "Create your admin account" : "Sign in to admin dashboard"}
+            {isSetup ? "Crie sua conta de administrador" : "Entre no painel administrativo"}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-card border border-border rounded-lg p-6 flex flex-col gap-4">
           {isSetup && (
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="name" className="text-sm font-medium text-foreground">Name</label>
+              <label htmlFor="name" className="text-sm font-medium text-foreground">Nome</label>
               <input
                 id="name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Your name"
+                placeholder="Seu nome"
               />
             </div>
           )}
@@ -114,7 +114,7 @@ export default function AdminLoginPage() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="text-sm font-medium text-foreground">Password</label>
+            <label htmlFor="password" className="text-sm font-medium text-foreground">Senha</label>
             <input
               id="password"
               type="password"
@@ -122,7 +122,7 @@ export default function AdminLoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Enter password"
+                placeholder="Digite sua senha"
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function AdminLoginPage() {
             disabled={loading}
             className="mt-2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
           >
-            {loading ? "Loading..." : isSetup ? "Create Account & Login" : "Sign In"}
+            {loading ? "Carregando..." : isSetup ? "Criar Conta e Entrar" : "Entrar"}
           </button>
         </form>
       </div>

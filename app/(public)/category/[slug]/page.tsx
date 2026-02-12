@@ -16,10 +16,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const sql = getDb()
   const cats = await sql`SELECT * FROM categories WHERE slug = ${slug}`
   const category = cats[0]
-  if (!category) return { title: "Category Not Found" }
+  if (!category) return { title: "Categoria Nao Encontrada" }
   return {
-    title: `${category.name} News`,
-    description: `Latest ${category.name} news and articles on Fronteira Geek.`,
+    title: `Noticias de ${category.name}`,
+    description: `Ultimas noticias e artigos sobre ${category.name} no Fronteira Geek.`,
   }
 }
 
@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }: Props) {
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="flex-1 min-w-0">
           {posts.length === 0 ? (
-            <p className="text-muted-foreground py-16 text-center">No posts in this category yet.</p>
+            <p className="text-muted-foreground py-16 text-center">Nenhum post nesta categoria ainda.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {posts.map((post: Record<string, unknown>) => (

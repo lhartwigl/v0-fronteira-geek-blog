@@ -64,7 +64,7 @@ export function PostCard({ post }: PostCardProps) {
           )}
           <span className="flex items-center gap-1">
             <Clock className="h-3 w-3" />
-            {post.reading_time} min
+            {post.reading_time} min de leitura
           </span>
         </div>
       </div>

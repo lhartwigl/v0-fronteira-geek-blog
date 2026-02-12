@@ -36,13 +36,13 @@ export function NewsletterForm() {
         <h3 className="font-heading text-lg font-bold text-foreground">Newsletter</h3>
       </div>
       <p className="text-sm text-muted-foreground mb-4">
-        Get the latest geek news delivered to your inbox.
+        Receba as ultimas noticias geek direto no seu e-mail.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           type="email"
           required
-          placeholder="your@email.com"
+          placeholder="seu@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -52,13 +52,13 @@ export function NewsletterForm() {
           disabled={status === "loading"}
           className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
-          {status === "loading" ? "Subscribing..." : "Subscribe"}
+          {status === "loading" ? "Inscrevendo..." : "Inscrever-se"}
         </button>
         {status === "success" && (
-          <p className="text-sm text-primary">You are now subscribed!</p>
+          <p className="text-sm text-primary">Voce esta inscrito!</p>
         )}
         {status === "error" && (
-          <p className="text-sm text-destructive">Something went wrong. Try again.</p>
+          <p className="text-sm text-destructive">Algo deu errado. Tente novamente.</p>
         )}
       </form>
     </section>

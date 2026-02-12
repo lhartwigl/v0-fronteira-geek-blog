@@ -23,22 +23,22 @@ export default async function AdminDashboard() {
   ])
 
   const stats = [
-    { label: "Total Posts", value: postsCount[0].count, icon: FileText, color: "text-primary" },
-    { label: "Published", value: publishedCount[0].count, icon: Eye, color: "text-accent" },
-    { label: "Total Clicks", value: totalClicks[0].total.toLocaleString(), icon: MousePointerClick, color: "text-emerald-400" },
-    { label: "Categories", value: categoriesCount[0].count, icon: Layers, color: "text-blue-400" },
-    { label: "Subscribers", value: subscribersCount[0].count, icon: Users, color: "text-purple-400" },
+    { label: "Total de Posts", value: postsCount[0].count, icon: FileText, color: "text-primary" },
+    { label: "Publicados", value: publishedCount[0].count, icon: Eye, color: "text-accent" },
+    { label: "Total de Cliques", value: totalClicks[0].total.toLocaleString(), icon: MousePointerClick, color: "text-emerald-400" },
+    { label: "Categorias", value: categoriesCount[0].count, icon: Layers, color: "text-blue-400" },
+    { label: "Inscritos", value: subscribersCount[0].count, icon: Users, color: "text-purple-400" },
   ]
 
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="font-heading text-2xl font-bold text-foreground">Dashboard</h1>
+        <h1 className="font-heading text-2xl font-bold text-foreground">Painel</h1>
         <Link
           href="/admin/posts/new"
           className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
         >
-          New Post
+          Novo Post
         </Link>
       </div>
 
@@ -56,11 +56,11 @@ export default async function AdminDashboard() {
 
       <div className="bg-card border border-border rounded-lg">
         <div className="p-5 border-b border-border">
-          <h2 className="font-heading text-lg font-bold text-foreground">Recent Posts</h2>
+          <h2 className="font-heading text-lg font-bold text-foreground">Posts Recentes</h2>
         </div>
         {recentPosts.length === 0 ? (
           <div className="p-8 text-center text-muted-foreground">
-            <p>No posts yet. Create your first post!</p>
+            <p>Nenhum post ainda. Crie seu primeiro post!</p>
           </div>
         ) : (
           <div className="divide-y divide-border">

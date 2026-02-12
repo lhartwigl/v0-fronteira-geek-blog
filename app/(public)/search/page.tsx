@@ -23,12 +23,12 @@ export default function SearchPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="font-heading text-3xl font-bold text-foreground mb-6">Search</h1>
+      <h1 className="font-heading text-3xl font-bold text-foreground mb-6">Buscar</h1>
       <div className="relative mb-8">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         <input
           type="text"
-          placeholder="Search articles..."
+          placeholder="Buscar artigos..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-base"
@@ -37,12 +37,12 @@ export default function SearchPage() {
       </div>
 
       {isLoading && (
-        <p className="text-muted-foreground text-center py-8">Searching...</p>
+        <p className="text-muted-foreground text-center py-8">Buscando...</p>
       )}
 
       {data?.posts && data.posts.length === 0 && debouncedQuery && (
         <p className="text-muted-foreground text-center py-8">
-          No results found for &ldquo;{debouncedQuery}&rdquo;
+          Nenhum resultado encontrado para &ldquo;{debouncedQuery}&rdquo;
         </p>
       )}
 

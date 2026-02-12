@@ -9,13 +9,13 @@ const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space
 
 export const metadata: Metadata = {
   title: {
-    default: 'Fronteira Geek - Your Daily Dose of Geek News',
+    default: 'Fronteira Geek - Sua Dose Diaria de Noticias Geek',
     template: '%s | Fronteira Geek',
   },
-  description: 'The ultimate source for geek news covering anime, games, Marvel, DC, Star Wars, RPG, and tech.',
+  description: 'A melhor fonte de noticias geek sobre anime, games, Marvel, DC, Star Wars, RPG e tecnologia.',
   openGraph: {
     title: 'Fronteira Geek',
-    description: 'The ultimate source for geek news.',
+    description: 'A melhor fonte de noticias geek.',
     siteName: 'Fronteira Geek',
     type: 'website',
   },
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="pt-BR" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body suppressHydrationWarning className="font-sans antialiased min-h-screen">{children}</body>
     </html>
   )

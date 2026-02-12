@@ -10,17 +10,17 @@ export function SiteFooter() {
               <span className="font-heading text-lg font-bold text-primary">Fronteira</span>
               <span className="font-heading text-lg font-bold text-foreground">Geek</span>
             </Link>
-            <p className="text-sm text-muted-foreground mt-2">Your daily dose of geek news.</p>
+            <p className="text-sm text-muted-foreground mt-2">Sua dose diaria de noticias geek.</p>
           </div>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <Link href="/category/anime" className="hover:text-primary transition-colors">Anime</Link>
             <Link href="/category/games" className="hover:text-primary transition-colors">Games</Link>
             <Link href="/category/marvel" className="hover:text-primary transition-colors">Marvel</Link>
-            <Link href="/category/tech" className="hover:text-primary transition-colors">Tech</Link>
+            <Link href="/category/tech" className="hover:text-primary transition-colors">Tecnologia</Link>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border text-center text-xs text-muted-foreground">
-          <p>Fronteira Geek. All rights reserved.</p>
+          <p>Fronteira Geek. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

@@ -70,10 +70,10 @@ export default async function HomePage() {
       {!hasPosts && (
         <div className="flex flex-col items-center justify-center py-32 text-center">
           <h1 className="font-heading text-4xl font-bold text-foreground mb-4">
-            Welcome to Fronteira Geek
+            Bem-vindo ao Fronteira Geek
           </h1>
           <p className="text-lg text-muted-foreground max-w-md">
-            No posts published yet. Check back soon for the latest geek news.
+            Nenhum post publicado ainda. Volte em breve para as ultimas noticias geek.
           </p>
         </div>
       )}
@@ -92,7 +92,7 @@ export default async function HomePage() {
                 <section>
                   <h2 className="font-heading text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                     <span className="w-1 h-6 bg-accent rounded-full" aria-hidden="true" />
-                    Recent Posts
+                    Posts Recentes
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     {posts.map((post: Record<string, unknown>) => (

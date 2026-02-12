@@ -12,7 +12,7 @@ export default function AdminPostsPage() {
   const { data, isLoading } = useSWR("/api/admin/posts", fetcher)
 
   async function handleDelete(id: number) {
-    if (!confirm("Are you sure you want to delete this post?")) return
+    if (!confirm("Tem certeza que deseja excluir este post?")) return
     await fetch(`/api/admin/posts/${id}`, { method: "DELETE" })
     mutate("/api/admin/posts")
   }
@@ -26,20 +26,20 @@ export default function AdminPostsPage() {
           className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
         >
           <Plus className="h-4 w-4" />
-          New Post
+          Novo Post
         </Link>
       </div>
 
       {isLoading ? (
-        <p className="text-muted-foreground py-8 text-center">Loading posts...</p>
+        <p className="text-muted-foreground py-8 text-center">Carregando posts...</p>
       ) : !data?.posts?.length ? (
         <div className="bg-card border border-border rounded-lg p-12 text-center">
-          <p className="text-muted-foreground mb-4">No posts yet.</p>
+          <p className="text-muted-foreground mb-4">Nenhum post ainda.</p>
           <Link
             href="/admin/posts/new"
             className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
           >
-            Create your first post
+            Crie seu primeiro post
           </Link>
         </div>
       ) : (
@@ -49,12 +49,12 @@ export default function AdminPostsPage() {
               <thead>
                 <tr className="border-b border-border">
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Post</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Category</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Author</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Categoria</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Autor</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden sm:table-cell">Status</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Date</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Clicks</th>
-                  <th className="text-right text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Actions</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Data</th>
+                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Cliques</th>
+                  <th className="text-right text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Acoes</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">

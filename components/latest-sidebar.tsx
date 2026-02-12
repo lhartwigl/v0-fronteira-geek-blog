@@ -15,7 +15,7 @@ export function LatestSidebar({ posts }: { posts: LatestPost[] }) {
     <aside className="w-full">
       <h2 className="font-heading text-lg font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="w-1 h-6 bg-primary rounded-full" aria-hidden="true" />
-        Latest
+        Recentes
       </h2>
       <div className="flex flex-col gap-4">
         {posts.map((post) => (

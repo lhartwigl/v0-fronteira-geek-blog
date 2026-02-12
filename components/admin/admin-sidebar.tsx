@@ -8,12 +8,12 @@ import {
 import { useState } from "react"
 
 const links = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin", label: "Painel", icon: LayoutDashboard },
   { href: "/admin/posts", label: "Posts", icon: FileText },
-  { href: "/admin/posts/new", label: "Create Post", icon: PenSquare },
-  { href: "/admin/categories", label: "Categories", icon: FolderOpen },
-  { href: "/admin/media", label: "Media", icon: ImageIcon },
-  { href: "/admin/profile", label: "Profile", icon: UserCircle },
+  { href: "/admin/posts/new", label: "Criar Post", icon: PenSquare },
+  { href: "/admin/categories", label: "Categorias", icon: FolderOpen },
+  { href: "/admin/media", label: "Midia", icon: ImageIcon },
+  { href: "/admin/profile", label: "Perfil", icon: UserCircle },
 ]
 
 export function AdminSidebar({ userEmail }: { userEmail: string }) {
@@ -68,7 +68,7 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
           className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-destructive transition-colors w-full rounded-md hover:bg-secondary"
         >
           <LogOut className="h-4 w-4" />
-          Logout
+          Sair
         </button>
       </div>
     </div>
@@ -81,7 +81,7 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
         type="button"
         className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-card border border-border rounded-md text-foreground"
         onClick={() => setMobileOpen(!mobileOpen)}
-        aria-label="Toggle sidebar"
+        aria-label="Alternar barra lateral"
       >
         {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>

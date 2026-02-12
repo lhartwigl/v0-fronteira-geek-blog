@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     WHERE p.slug = ${slug} AND p.status = 'published'
   `
   const post = posts[0]
-  if (!post) return { title: "Post Not Found" }
+  if (!post) return { title: "Post Nao Encontrado" }
   return {
     title: post.title as string,
     description: (post.meta_description || post.excerpt || "") as string,
@@ -73,7 +73,7 @@ export default async function PostPage({ params }: Props) {
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to Home
+        Voltar ao Inicio
       </Link>
 
       {post.category_name && (
@@ -109,7 +109,7 @@ export default async function PostPage({ params }: Props) {
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
-                  {post.reading_time as number} min read
+                  {post.reading_time as number} min de leitura
                 </span>
                 <span>{timeAgo(post.created_at as string)}</span>
               </div>
@@ -120,7 +120,7 @@ export default async function PostPage({ params }: Props) {
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              {post.reading_time as number} min read
+              {post.reading_time as number} min de leitura
             </span>
             <span>{timeAgo(post.created_at as string)}</span>
           </div>
@@ -171,7 +171,7 @@ export default async function PostPage({ params }: Props) {
         <section className="mt-16 pt-8 border-t border-border">
           <h2 className="font-heading text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
             <span className="w-1 h-6 bg-accent rounded-full" aria-hidden="true" />
-            Related Posts
+            Posts Relacionados
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {related.map((p: Record<string, unknown>) => (
