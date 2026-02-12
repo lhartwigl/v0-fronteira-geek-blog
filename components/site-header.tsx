@@ -74,7 +74,6 @@ export function SiteHeader() {
                 {cat.name}
               </Link>
             ))}
-
           </nav>
         </div>
       )}
