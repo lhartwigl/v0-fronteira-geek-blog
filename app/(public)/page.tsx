@@ -72,15 +72,9 @@ export default async function HomePage() {
           <h1 className="font-heading text-4xl font-bold text-foreground mb-4">
             Welcome to Fronteira Geek
           </h1>
-          <p className="text-lg text-muted-foreground max-w-md mb-8">
-            No posts published yet. Head to the admin panel to create your first article.
+          <p className="text-lg text-muted-foreground max-w-md">
+            No posts published yet. Check back soon for the latest geek news.
           </p>
-          <a
-            href="/admin"
-            className="px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors"
-          >
-            Go to Admin
-          </a>
         </div>
       )}
 

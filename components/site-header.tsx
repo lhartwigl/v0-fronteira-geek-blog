@@ -50,12 +50,6 @@ export function SiteHeader() {
           >
             <Search className="h-5 w-5" />
           </Link>
-          <Link
-            href="/admin"
-            className="hidden sm:inline-flex px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-          >
-            Admin
-          </Link>
           <button
             type="button"
             className="lg:hidden p-2 text-muted-foreground hover:text-foreground"
@@ -80,13 +74,7 @@ export function SiteHeader() {
                 {cat.name}
               </Link>
             ))}
-            <Link
-              href="/admin"
-              className="sm:hidden mt-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-center"
-              onClick={() => setMobileOpen(false)}
-            >
-              Admin
-            </Link>
+
           </nav>
         </div>
       )}
