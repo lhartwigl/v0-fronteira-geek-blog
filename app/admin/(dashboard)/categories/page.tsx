@@ -28,25 +28,25 @@ export default function AdminCategoriesPage() {
   }
 
   async function handleDelete(id: number) {
-    if (!confirm("Delete this category?")) return
+    if (!confirm("Excluir esta categoria?")) return
     await fetch(`/api/admin/categories/${id}`, { method: "DELETE" })
     mutate("/api/admin/categories")
   }
 
   return (
     <div>
-      <h1 className="font-heading text-2xl font-bold text-foreground mb-8">Categories</h1>
+      <h1 className="font-heading text-2xl font-bold text-foreground mb-8">Categorias</h1>
 
       <form onSubmit={handleCreate} className="flex items-end gap-3 mb-8">
         <div className="flex flex-col gap-1.5 flex-1 max-w-sm">
-          <label htmlFor="catname" className="text-sm font-medium text-foreground">New Category</label>
+          <label htmlFor="catname" className="text-sm font-medium text-foreground">Nova Categoria</label>
           <input
             id="catname"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-            placeholder="Category name"
+            placeholder="Nome da categoria"
           />
         </div>
         <button
@@ -55,12 +55,12 @@ export default function AdminCategoriesPage() {
           className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
           <Plus className="h-4 w-4" />
-          Add
+          Adicionar
         </button>
       </form>
 
       {isLoading ? (
-        <p className="text-muted-foreground">Loading...</p>
+        <p className="text-muted-foreground">Carregando...</p>
       ) : (
         <div className="bg-card border border-border rounded-lg divide-y divide-border">
           {data?.categories?.map((cat: { id: number; name: string; slug: string }) => (
@@ -73,7 +73,7 @@ export default function AdminCategoriesPage() {
                 type="button"
                 onClick={() => handleDelete(cat.id)}
                 className="p-2 text-muted-foreground hover:text-destructive transition-colors rounded-md hover:bg-secondary"
-                aria-label={`Delete ${cat.name}`}
+                aria-label={`Excluir ${cat.name}`}
               >
                 <Trash2 className="h-4 w-4" />
               </button>

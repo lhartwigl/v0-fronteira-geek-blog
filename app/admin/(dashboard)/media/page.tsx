@@ -64,7 +64,7 @@ export default function AdminMediaPage() {
   )
 
   async function handleDelete(item: MediaItem) {
-    if (!confirm(`Delete "${item.filename}"? This cannot be undone.`)) return
+    if (!confirm(`Excluir "${item.filename}"? Esta acao nao pode ser desfeita.`)) return
     setDeleting(item.id)
     try {
       await fetch("/api/admin/media", {
@@ -93,9 +93,9 @@ export default function AdminMediaPage() {
   }
 
   function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      month: "short",
+    return new Date(dateStr).toLocaleDateString("pt-BR", {
       day: "numeric",
+      month: "short",
       year: "numeric",
     })
   }
@@ -104,12 +104,12 @@ export default function AdminMediaPage() {
     <div>
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">Media Library</h1>
-          <p className="text-sm text-muted-foreground mt-1">{total} file{total !== 1 ? "s" : ""} uploaded</p>
+          <h1 className="font-heading text-2xl font-bold text-foreground">Biblioteca de Midia</h1>
+          <p className="text-sm text-muted-foreground mt-1">{total} arquivo{total !== 1 ? "s" : ""} enviado{total !== 1 ? "s" : ""}</p>
         </div>
         <label className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors cursor-pointer">
           {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
-          Upload Files
+          Enviar Arquivos
           <input type="file" accept="image/*" multiple className="sr-only" onChange={handleUpload} />
         </label>
       </div>
@@ -121,7 +121,7 @@ export default function AdminMediaPage() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search files by name..."
+          placeholder="Buscar arquivos por nome..."
           className="w-full max-w-md pl-9 pr-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
         />
       </div>
@@ -136,13 +136,13 @@ export default function AdminMediaPage() {
           {mediaItems.map((item) => (
             <div key={item.id} className="group bg-card border border-border rounded-lg overflow-hidden">
               <div className="aspect-video relative">
-                <img src={item.url || "/placeholder.svg"} alt={item.filename} className="w-full h-full object-cover" />
+                <img src={item.url} alt={item.filename} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button
                     type="button"
                     onClick={() => copyUrl(item.url)}
                     className="p-2 bg-card/90 border border-border rounded-md text-foreground hover:text-primary transition-colors"
-                    title="Copy URL"
+                    title="Copiar URL"
                   >
                     {copied === item.url ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </button>
@@ -151,7 +151,7 @@ export default function AdminMediaPage() {
                     onClick={() => handleDelete(item)}
                     disabled={deleting === item.id}
                     className="p-2 bg-card/90 border border-border rounded-md text-foreground hover:text-destructive transition-colors disabled:opacity-50"
-                    title="Delete"
+                    title="Excluir"
                   >
                     {deleting === item.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
                   </button>
@@ -168,7 +168,7 @@ export default function AdminMediaPage() {
         </div>
       ) : (
         <p className="text-muted-foreground text-center py-16 text-sm">
-          {search ? "No files match your search." : "No media uploaded yet. Upload images to get started."}
+          {search ? "Nenhum arquivo corresponde a sua busca." : "Nenhuma midia enviada ainda. Envie imagens para comecar."}
         </p>
       )}
 
@@ -181,10 +181,10 @@ export default function AdminMediaPage() {
             disabled={page <= 1}
             className="px-4 py-2 bg-secondary text-secondary-foreground text-sm rounded-md hover:bg-secondary/80 transition-colors disabled:opacity-40"
           >
-            Previous
+            Anterior
           </button>
           <span className="text-sm text-muted-foreground">
-            Page {page} of {totalPages}
+            Pagina {page} de {totalPages}
           </span>
           <button
             type="button"
@@ -192,7 +192,7 @@ export default function AdminMediaPage() {
             disabled={page >= totalPages}
             className="px-4 py-2 bg-secondary text-secondary-foreground text-sm rounded-md hover:bg-secondary/80 transition-colors disabled:opacity-40"
           >
-            Next
+            Proxima
           </button>
         </div>
       )}
