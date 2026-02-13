@@ -1,6 +1,6 @@
--- Insert a default admin user (password: admin123)
+-- Insert a default admin user (password: admin6946s)
 INSERT INTO users (email, password, name, role) VALUES
-  ('admin@fronteirageek.com', 'admin123', 'Admin', 'ADMIN')
+  ('admin@fronteirageek.com', 'admin6946s', 'Admin', 'ADMIN')
 ON CONFLICT (email) DO NOTHING;
 
 -- Insert sample featured post
