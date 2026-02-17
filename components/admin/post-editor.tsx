@@ -184,8 +184,8 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
             onChange={(e) => updateField("status", e.target.value)}
             className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
+            <option value="draft">Rascunho</option>
+            <option value="published">Publicado</option>
           </select>
         </div>
       </div>
@@ -198,20 +198,20 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           onChange={(e) => updateField("featured", e.target.checked)}
           className="rounded border-border text-primary focus:ring-primary"
         />
-        Featured post (shows in hero section)
+        Post em destaque (aparece na secao principal)
       </label>
 
       {/* Image Uploads */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ImageUpload
-          label="Thumbnail"
+          label="Miniatura"
           value={form.thumbnail_url}
           uploading={uploading === "thumbnail_url"}
           onUpload={(file) => handleUpload("thumbnail_url", file)}
           onChange={(val) => updateField("thumbnail_url", val)}
         />
         <ImageUpload
-          label="Hero Image"
+          label="Imagem Principal"
           value={form.hero_image_url}
           uploading={uploading === "hero_image_url"}
           onUpload={(file) => handleUpload("hero_image_url", file)}
@@ -221,14 +221,14 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
 
       {/* Excerpt */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="excerpt" className="text-sm font-medium text-foreground">Excerpt</label>
+        <label htmlFor="excerpt" className="text-sm font-medium text-foreground">Resumo</label>
         <textarea
           id="excerpt"
           rows={3}
           value={form.excerpt}
           onChange={(e) => updateField("excerpt", e.target.value)}
           className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-y"
-          placeholder="Brief description of the post..."
+          placeholder="Breve descricao do post..."
         />
       </div>
 
