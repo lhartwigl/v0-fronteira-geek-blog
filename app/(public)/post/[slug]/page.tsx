@@ -68,22 +68,24 @@ export default async function PostPage({ params }: Props) {
   return (
     <article className="mx-auto max-w-4xl px-4 py-8">
       <TrackClick postId={post.id as number} />
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Voltar ao Inicio
-      </Link>
-
-      {post.category_name && (
+      <div className="flex flex-wrap items-center gap-4 mb-6">
         <Link
-          href={`/category/${post.category_slug}`}
-          className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded mb-4"
+          href="/"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
         >
-          {post.category_name as string}
+          <ArrowLeft className="h-4 w-4" />
+          Voltar ao Inicio
         </Link>
-      )}
+
+        {post.category_name && (
+          <Link
+            href={`/category/${post.category_slug}`}
+            className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded"
+          >
+            {post.category_name as string}
+          </Link>
+        )}
+      </div>
 
       <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
         {post.title as string}

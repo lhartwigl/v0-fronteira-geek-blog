@@ -81,7 +81,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
 
   const handleAIGenerate = useCallback(async () => {
     if (!form.title) {
-      alert("Please enter a title first.")
+      alert("Por favor, insira um titulo primeiro.")
       return
     }
     setGenerating(true)
@@ -138,14 +138,14 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
     <div className="flex flex-col gap-6 max-w-4xl">
       {/* Title */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="title" className="text-sm font-medium text-foreground">Title</label>
+        <label htmlFor="title" className="text-sm font-medium text-foreground">Titulo</label>
         <input
           id="title"
           type="text"
           value={form.title}
           onChange={(e) => updateField("title", e.target.value)}
           className="px-3 py-2.5 bg-secondary border border-border rounded-md text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-base font-heading"
-          placeholder="Enter post title..."
+          placeholder="Digite o titulo do post..."
         />
       </div>
 
@@ -157,20 +157,20 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         className="self-start flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-md hover:bg-accent/90 transition-colors disabled:opacity-50"
       >
         {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-        {generating ? "Generating with AI..." : "Generate with AI"}
+        {generating ? "Gerando com IA..." : "Gerar com IA"}
       </button>
 
       {/* Category & Status */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="category" className="text-sm font-medium text-foreground">Category</label>
+          <label htmlFor="category" className="text-sm font-medium text-foreground">Categoria</label>
           <select
             id="category"
             value={form.category_id || ""}
             onChange={(e) => updateField("category_id", e.target.value ? Number(e.target.value) : null)}
             className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <option value="">No category</option>
+            <option value="">Sem categoria</option>
             {catData?.categories?.map((cat: { id: number; name: string }) => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
             ))}
@@ -184,8 +184,8 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
             onChange={(e) => updateField("status", e.target.value)}
             className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
+            <option value="draft">Rascunho</option>
+            <option value="published">Publicado</option>
           </select>
         </div>
       </div>
@@ -198,20 +198,20 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           onChange={(e) => updateField("featured", e.target.checked)}
           className="rounded border-border text-primary focus:ring-primary"
         />
-        Featured post (shows in hero section)
+        Post em destaque (aparece na secao principal)
       </label>
 
       {/* Image Uploads */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ImageUpload
-          label="Thumbnail"
+          label="Miniatura"
           value={form.thumbnail_url}
           uploading={uploading === "thumbnail_url"}
           onUpload={(file) => handleUpload("thumbnail_url", file)}
           onChange={(val) => updateField("thumbnail_url", val)}
         />
         <ImageUpload
-          label="Hero Image"
+          label="Imagem Principal"
           value={form.hero_image_url}
           uploading={uploading === "hero_image_url"}
           onUpload={(file) => handleUpload("hero_image_url", file)}
@@ -221,14 +221,14 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
 
       {/* Excerpt */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="excerpt" className="text-sm font-medium text-foreground">Excerpt</label>
+        <label htmlFor="excerpt" className="text-sm font-medium text-foreground">Resumo</label>
         <textarea
           id="excerpt"
           rows={3}
           value={form.excerpt}
           onChange={(e) => updateField("excerpt", e.target.value)}
           className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-y"
-          placeholder="Brief description of the post..."
+          placeholder="Breve descricao do post..."
         />
       </div>
 
