@@ -234,33 +234,33 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
 
       {/* Content - Rich Text Editor */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-foreground">Content</label>
+        <label className="text-sm font-medium text-foreground">Conteudo</label>
         <RichTextEditor content={form.content} onChange={(html) => updateField("content", html)} />
       </div>
 
       {/* Meta Description */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="meta" className="text-sm font-medium text-foreground">Meta Description</label>
+        <label htmlFor="meta" className="text-sm font-medium text-foreground">Meta Descricao</label>
         <textarea
           id="meta"
           rows={2}
           value={form.meta_description}
           onChange={(e) => updateField("meta_description", e.target.value)}
           className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-y"
-          placeholder="SEO meta description..."
+          placeholder="Descricao para SEO..."
         />
       </div>
 
       {/* Tags */}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="tags" className="text-sm font-medium text-foreground">Tags (comma separated)</label>
+        <label htmlFor="tags" className="text-sm font-medium text-foreground">Tags (separadas por virgula)</label>
         <input
           id="tags"
           type="text"
           value={tagsInput}
           onChange={(e) => setTagsInput(e.target.value)}
           className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-          placeholder="anime, review, news"
+          placeholder="anime, review, noticias"
         />
       </div>
 
@@ -272,7 +272,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           disabled={saving}
           className="px-4 py-2 bg-secondary text-secondary-foreground text-sm font-medium rounded-md hover:bg-secondary/80 transition-colors disabled:opacity-50"
         >
-          Save as Draft
+          Salvar Rascunho
         </button>
         <button
           type="button"
@@ -280,7 +280,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           disabled={saving}
           className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Publish"}
+          {saving ? "Salvando..." : "Publicar"}
         </button>
       </div>
     </div>
@@ -316,7 +316,7 @@ function ImageUpload({
             type="button"
             onClick={() => onChange("")}
             className="absolute top-2 right-2 p-1 bg-background/80 border border-border rounded-md text-foreground hover:text-destructive hover:bg-background transition-colors"
-            title={`Remove ${label.toLowerCase()}`}
+            title={`Remover ${label.toLowerCase()}`}
           >
             <X className="h-4 w-4" />
           </button>
@@ -329,7 +329,7 @@ function ImageUpload({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="flex-1 px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-          placeholder="Image URL..."
+          placeholder="URL da imagem..."
         />
         <label className="shrink-0 flex items-center gap-1 px-3 py-2 bg-secondary border border-border rounded-md text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
           {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
