@@ -89,12 +89,12 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
       <div className="w-full max-w-4xl max-h-[85vh] bg-card border border-border rounded-xl shadow-2xl flex flex-col mx-4">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
-          <h2 className="font-heading text-lg font-bold text-foreground">Media Gallery</h2>
+          <h2 className="font-heading text-lg font-bold text-foreground">Galeria de Midia</h2>
           <button
             type="button"
             onClick={onClose}
             className="p-1.5 text-muted-foreground hover:text-foreground transition-colors rounded"
-            aria-label="Close"
+            aria-label="Fechar"
           >
             <X className="h-5 w-5" />
           </button>
@@ -108,7 +108,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search files..."
+              placeholder="Buscar arquivos..."
               className="w-full pl-9 pr-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
@@ -162,7 +162,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
           ) : (
             <div className="flex items-center justify-center py-16">
               <p className="text-muted-foreground text-sm">
-                {search ? "No results found." : "No media uploaded yet. Upload images to get started."}
+                {search ? "Nenhum resultado encontrado." : "Nenhuma midia enviada. Envie imagens para comecar."}
               </p>
             </div>
           )}
@@ -179,10 +179,10 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
                   disabled={page <= 1}
                   className="px-3 py-1.5 bg-secondary text-secondary-foreground text-xs rounded hover:bg-secondary/80 transition-colors disabled:opacity-40"
                 >
-                  Previous
+                  Anterior
                 </button>
                 <span className="text-xs text-muted-foreground">
-                  Page {page} of {totalPages}
+                  Pagina {page} de {totalPages}
                 </span>
                 <button
                   type="button"
@@ -190,7 +190,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
                   disabled={page >= totalPages}
                   className="px-3 py-1.5 bg-secondary text-secondary-foreground text-xs rounded hover:bg-secondary/80 transition-colors disabled:opacity-40"
                 >
-                  Next
+                  Proxima
                 </button>
               </>
             )}
@@ -201,7 +201,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
             onClick={() => selected && onSelect(selected)}
             className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-40"
           >
-            Insert Selected
+            Inserir Selecionado
           </button>
         </div>
       </div>

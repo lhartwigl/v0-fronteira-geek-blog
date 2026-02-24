@@ -66,7 +66,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
         types: ["heading", "paragraph"],
       }),
       Placeholder.configure({
-        placeholder: "Start writing your article...",
+        placeholder: "Comece a escrever seu artigo...",
       }),
       Youtube.configure({
         HTMLAttributes: { class: "rounded-lg overflow-hidden" },
@@ -130,28 +130,28 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           <ToolbarButton
             onClick={() => editor.chain().focus().setParagraph().run()}
             active={editor.isActive("paragraph")}
-            title="Paragraph"
+            title="Paragrafo"
           >
             <Type className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             active={editor.isActive("heading", { level: 1 })}
-            title="Heading 1"
+            title="Titulo 1"
           >
             <Heading1 className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             active={editor.isActive("heading", { level: 2 })}
-            title="Heading 2"
+            title="Titulo 2"
           >
             <Heading2 className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             active={editor.isActive("heading", { level: 3 })}
-            title="Heading 3"
+            title="Titulo 3"
           >
             <Heading3 className="h-4 w-4" />
           </ToolbarButton>
@@ -164,35 +164,35 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleBold().run()}
             active={editor.isActive("bold")}
-            title="Bold"
+            title="Negrito"
           >
             <Bold className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleItalic().run()}
             active={editor.isActive("italic")}
-            title="Italic"
+            title="Italico"
           >
             <Italic className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             active={editor.isActive("underline")}
-            title="Underline"
+            title="Sublinhado"
           >
             <UnderlineIcon className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleStrike().run()}
             active={editor.isActive("strike")}
-            title="Strikethrough"
+            title="Tachado"
           >
             <Strikethrough className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleCode().run()}
             active={editor.isActive("code")}
-            title="Inline Code"
+            title="Codigo"
           >
             <Code className="h-4 w-4" />
           </ToolbarButton>
@@ -205,21 +205,21 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           <ToolbarButton
             onClick={() => editor.chain().focus().setTextAlign("left").run()}
             active={editor.isActive({ textAlign: "left" })}
-            title="Align Left"
+            title="Alinhar Esquerda"
           >
             <AlignLeft className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().setTextAlign("center").run()}
             active={editor.isActive({ textAlign: "center" })}
-            title="Align Center"
+            title="Centralizar"
           >
             <AlignCenter className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().setTextAlign("right").run()}
             active={editor.isActive({ textAlign: "right" })}
-            title="Align Right"
+            title="Alinhar Direita"
           >
             <AlignRight className="h-4 w-4" />
           </ToolbarButton>
@@ -232,27 +232,27 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             active={editor.isActive("bulletList")}
-            title="Bullet List"
+            title="Lista"
           >
             <List className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             active={editor.isActive("orderedList")}
-            title="Ordered List"
+            title="Lista Numerada"
           >
             <ListOrdered className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             active={editor.isActive("blockquote")}
-            title="Blockquote"
+            title="Citacao"
           >
             <Quote className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
-            title="Horizontal Rule"
+            title="Linha Horizontal"
           >
             <Minus className="h-4 w-4" />
           </ToolbarButton>
@@ -270,13 +270,13 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
               setShowYoutubeInput(false)
             }}
             active={editor.isActive("link")}
-            title="Insert Link"
+            title="Inserir Link"
           >
             <LinkIcon className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => setShowMediaGallery(true)}
-            title="Insert Image from Gallery"
+            title="Inserir Imagem da Galeria"
           >
             <ImageIcon className="h-4 w-4" />
           </ToolbarButton>
@@ -285,7 +285,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
               setShowYoutubeInput(!showYoutubeInput)
               setShowLinkInput(false)
             }}
-            title="Embed YouTube"
+            title="Incorporar YouTube"
           >
             <YoutubeIcon className="h-4 w-4" />
           </ToolbarButton>
@@ -298,14 +298,14 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           <ToolbarButton
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
-            title="Undo"
+            title="Desfazer"
           >
             <Undo className="h-4 w-4" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
-            title="Redo"
+            title="Refazer"
           >
             <Redo className="h-4 w-4" />
           </ToolbarButton>
@@ -328,7 +328,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
             onClick={setLink}
             className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded hover:bg-primary/90 transition-colors"
           >
-            Set
+            Aplicar
           </button>
           <button
             type="button"
@@ -338,7 +338,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
             }}
             className="px-3 py-1 bg-destructive text-destructive-foreground text-xs font-medium rounded hover:bg-destructive/90 transition-colors"
           >
-            Remove
+            Remover
           </button>
         </div>
       )}
@@ -359,7 +359,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
             onClick={addYoutube}
             className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded hover:bg-primary/90 transition-colors"
           >
-            Embed
+            Incorporar
           </button>
         </div>
       )}
