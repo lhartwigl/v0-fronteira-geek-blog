@@ -1,3 +1,4 @@
+import { createOpenAI } from '@ai-sdk/openai'
 import { generateText, Output } from 'ai'
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
@@ -9,6 +10,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json(
+      { error: 'OPENAI_API_KEY nao configurada. Adicione a chave nas variaveis de ambiente do projeto.' },
+      { status: 500 },
+    )
+  }
+
   try {
     const { title, categoryName } = await request.json()
 
@@ -16,33 +24,40 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 })
     }
 
-    const categoryContext = categoryName ? ` in the ${categoryName} category` : ''
+    // ChatGPT (OpenAI) usando a chave do usuario via variavel de ambiente
+    const openai = createOpenAI({ apiKey: process.env.OPENAI_API_KEY })
+
+    const categoryContext = categoryName ? ` na categoria "${categoryName}"` : ''
 
     const result = await generateText({
-      model: 'openai/gpt-4o-mini',
+      model: openai('gpt-4o'),
       output: Output.object({
         schema: z.object({
-          content: z.string().describe('Full HTML article content with paragraphs, headings (h2, h3), and formatting. 400-800 words.'),
-          excerpt: z.string().describe('A compelling 1-2 sentence excerpt for the article card. Max 160 characters.'),
-          meta_description: z.string().describe('SEO-optimized meta description. Max 155 characters.'),
-          tags: z.array(z.string()).describe('5-8 relevant tags for the article.'),
+          content: z.string().describe('Conteudo completo do artigo em HTML com paragrafos, headings (h2, h3) e formatacao. 600-1000 palavras, otimizado para SEO.'),
+          excerpt: z.string().describe('Resumo atraente de 1-2 frases para o card do artigo. Maximo 160 caracteres.'),
+          meta_description: z.string().describe('Meta description otimizada para SEO, com palavra-chave principal. Maximo 155 caracteres.'),
+          tags: z.array(z.string()).describe('5-8 tags/palavras-chave relevantes para SEO.'),
         }),
       }),
-      prompt: `You are a professional geek news writer for "Fronteira Geek", a news portal covering anime, games, Marvel, DC, Star Wars, RPG, and tech.
+      prompt: `PROMPT PARA GERAR TEXTO PARA BLOG GEEK UTILIZANDO SEO
 
-Write a complete article for the following topic${categoryContext}:
+Voce e um redator profissional de conteudo geek e especialista em SEO do portal "Fronteira Geek", que cobre anime, games, Marvel, DC, Star Wars, RPG e tecnologia.
 
-Title: "${title}"
+Escreva um artigo completo, original e otimizado para mecanismos de busca sobre o seguinte tema${categoryContext}:
 
-Requirements:
-- Write engaging, informative content in a professional journalism style
-- Use HTML formatting: <p> for paragraphs, <h2> and <h3> for subheadings, <strong> for emphasis, <blockquote> for quotes
-- Include 4-6 paragraphs minimum
-- Make it exciting and relevant for geek culture fans
-- The content should be factual and well-structured
-- Generate a compelling excerpt (max 160 chars)
-- Generate an SEO meta description (max 155 chars)
-- Generate 5-8 relevant tags`,
+Titulo: "${title}"
+
+Diretrizes de SEO e redacao:
+- Escreva em portugues do Brasil, com tom jornalistico, envolvente e informativo.
+- Defina uma palavra-chave principal a partir do titulo e use-a de forma natural no primeiro paragrafo, em pelo menos um subtitulo (h2/h3) e ao longo do texto, sem keyword stuffing.
+- Use palavras-chave secundarias e termos relacionados (LSI) para enriquecer o conteudo.
+- Estruture o texto com escaneabilidade: introducao com gancho, subtitulos descritivos (<h2> e <h3>), paragrafos curtos (2-4 frases) e listas quando fizer sentido.
+- Use formatacao HTML: <p> para paragrafos, <h2> e <h3> para subtitulos, <strong> para enfase e <ul>/<li> para listas.
+- Minimo de 600 palavras, conteudo factual, bem estruturado e relevante para fas da cultura geek.
+- Inclua uma conclusao com chamada para acao (engajamento, comentarios ou leitura relacionada).
+- Gere um resumo (excerpt) atraente de ate 160 caracteres.
+- Gere uma meta description de ate 155 caracteres contendo a palavra-chave principal.
+- Gere de 5 a 8 tags/palavras-chave relevantes para SEO.`,
     })
 
     return NextResponse.json(result.output)
