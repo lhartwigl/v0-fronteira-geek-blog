@@ -157,7 +157,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         className="self-start flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-md hover:bg-accent/90 transition-colors disabled:opacity-50"
       >
         {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-        {generating ? "Gerando com ChatGPT..." : "Gerar com ChatGPT (SEO)"}
+        {generating ? "Gerando com IA..." : "Gerar com IA"}
       </button>
 
       {/* Category & Status */}
