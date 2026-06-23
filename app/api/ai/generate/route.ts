@@ -31,7 +31,7 @@ export async function POST(request: Request) {
 
     const result = await generateText({
       model: openai('gpt-4o'),
-      output: Output.object({
+      experimental_output: Output.object({
         schema: z.object({
           content: z.string().describe('Conteudo completo do artigo em HTML com paragrafos, headings (h2, h3) e formatacao. 600-1000 palavras, otimizado para SEO.'),
           excerpt: z.string().describe('Resumo atraente de 1-2 frases para o card do artigo. Maximo 160 caracteres.'),
@@ -60,7 +60,7 @@ Diretrizes de SEO e redacao:
 - Gere de 5 a 8 tags/palavras-chave relevantes para SEO.`,
     })
 
-    return NextResponse.json(result.output)
+    return NextResponse.json(result.experimental_output)
   } catch (error) {
     console.error('AI generation error:', error)
     return NextResponse.json({ error: 'AI generation failed' }, { status: 500 })
