@@ -1,6 +1,6 @@
 # Contas e acessos da equipe
 
-Revisao salva na ramificacao local **feature/equipe-e-acessos**. Ela ainda nao foi incorporada a main nem publicada. A previa local usa esta revisao. Incorpore e publique depois de configurar SESSION_SECRET na Vercel.
+Esta revisao foi preparada em **feature/equipe-e-acessos** e incorporada a **main** para publicacao. Configure SESSION_SECRET na Vercel antes de enviar a atualizacao. Confira a conclusao da implantacao no painel da hospedagem antes de usar as novas funcoes no site publico.
 
 ## Perfis
 
