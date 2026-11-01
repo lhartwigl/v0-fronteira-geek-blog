@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Menu, X, Search } from "lucide-react"
 
 const categories = [
@@ -17,6 +17,13 @@ const categories = [
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    if (!mobileOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setMobileOpen(false) }
+    window.addEventListener("keydown", closeOnEscape)
+    return () => window.removeEventListener("keydown", closeOnEscape)
+  }, [mobileOpen])
 
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
@@ -42,19 +49,21 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-3">
           <Link
             href="/search"
-            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            className="flex min-h-11 min-w-11 items-center justify-center p-2 text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Buscar"
           >
             <Search className="h-5 w-5" />
           </Link>
           <button
             type="button"
-            className="lg:hidden p-2 text-muted-foreground hover:text-foreground"
+            className="lg:hidden flex min-h-11 min-w-11 items-center justify-center p-2 text-muted-foreground hover:text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Alternar navegacao"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-site-navigation"
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -62,13 +71,13 @@ export function SiteHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-background px-4 pb-4">
+        <div id="mobile-site-navigation" className="lg:hidden max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border bg-background px-4 pb-4">
           <nav className="flex flex-col gap-1 pt-2">
             {categories.map((cat) => (
               <Link
                 key={cat.slug}
                 href={`/category/${cat.slug}`}
-                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors rounded-md"
+                className="flex min-h-11 items-center px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors rounded-md"
                 onClick={() => setMobileOpen(false)}
               >
                 {cat.name}

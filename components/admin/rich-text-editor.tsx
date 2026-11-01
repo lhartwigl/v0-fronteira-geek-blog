@@ -122,7 +122,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   if (!editor) return null
 
   return (
-    <div className="flex flex-col">
+    <div className="flex min-w-0 flex-col">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-0.5 p-2 bg-secondary border border-border rounded-t-md">
         {/* Text formatting */}
@@ -314,13 +314,13 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
 
       {/* Link Input */}
       {showLinkInput && (
-        <div className="flex items-center gap-2 p-2 bg-muted border-x border-border">
+        <div className="flex flex-wrap items-center gap-2 p-2 bg-muted border-x border-border">
           <input
             type="url"
             value={linkUrl}
             onChange={(e) => setLinkUrl(e.target.value)}
             placeholder="https://example.com"
-            className="flex-1 px-2 py-1 bg-secondary border border-border rounded text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+            className="min-w-0 basis-full sm:basis-auto flex-1 px-2 py-1 bg-secondary border border-border rounded text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
             onKeyDown={(e) => e.key === "Enter" && setLink()}
           />
           <button
@@ -345,13 +345,13 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
 
       {/* YouTube Input */}
       {showYoutubeInput && (
-        <div className="flex items-center gap-2 p-2 bg-muted border-x border-border">
+        <div className="flex flex-wrap items-center gap-2 p-2 bg-muted border-x border-border">
           <input
             type="url"
             value={youtubeUrl}
             onChange={(e) => setYoutubeUrl(e.target.value)}
             placeholder="https://www.youtube.com/watch?v=..."
-            className="flex-1 px-2 py-1 bg-secondary border border-border rounded text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+            className="min-w-0 basis-full sm:basis-auto flex-1 px-2 py-1 bg-secondary border border-border rounded text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
             onKeyDown={(e) => e.key === "Enter" && addYoutube()}
           />
           <button
@@ -397,7 +397,7 @@ function ToolbarButton({
       onClick={onClick}
       disabled={disabled}
       title={title}
-      className={`p-1.5 rounded transition-colors ${
+      className={`min-h-10 min-w-10 sm:min-h-0 sm:min-w-0 p-1.5 rounded transition-colors ${
         active
           ? "bg-primary/20 text-primary"
           : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -409,7 +409,7 @@ function ToolbarButton({
 }
 
 function ToolbarGroup({ children }: { children: React.ReactNode }) {
-  return <div className="flex items-center gap-0.5">{children}</div>
+  return <div className="flex max-w-full flex-wrap items-center gap-0.5">{children}</div>
 }
 
 function ToolbarDivider() {

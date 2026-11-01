@@ -42,7 +42,7 @@ export default async function AdminDashboard() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 mb-10">
         {stats.map((stat) => (
           <div key={stat.label} className="bg-card border border-border rounded-lg p-5">
             <div className="flex items-center justify-between mb-3">
@@ -68,16 +68,16 @@ export default async function AdminDashboard() {
               <Link
                 key={post.id as number}
                 href={`/admin/posts/${post.id}/edit`}
-                className="flex items-center justify-between p-4 hover:bg-secondary/50 transition-colors"
+                className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between p-4 hover:bg-secondary/50 transition-colors"
               >
-                <div className="min-w-0">
+                <div className="min-w-0 max-w-full">
                   <p className="text-sm font-medium text-foreground truncate">{post.title as string}</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     {post.category_name ? `${post.category_name} - ` : ""}
                     {new Date(post.created_at as string).toLocaleDateString()}
                   </p>
                 </div>
-                <div className="flex items-center gap-3 shrink-0 ml-4">
+                <div className="flex items-center gap-3 shrink-0 sm:ml-4">
                   <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                     <MousePointerClick className="h-3.5 w-3.5" />
                     {((post.clicks as number) || 0).toLocaleString()}

@@ -87,7 +87,7 @@ export default async function PostPage({ params }: Props) {
         )}
       </div>
 
-      <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+      <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance break-words mb-4">
         {post.title as string}
       </h1>
 
@@ -143,7 +143,7 @@ export default async function PostPage({ params }: Props) {
       )}
 
       <div
-        className="prose prose-invert prose-lg max-w-none
+        className="article-content prose prose-invert prose-base sm:prose-lg max-w-none
           prose-headings:font-heading prose-headings:text-foreground
           prose-p:text-muted-foreground prose-p:leading-relaxed
           prose-a:text-primary prose-a:no-underline hover:prose-a:underline

@@ -1,5 +1,5 @@
 import { getDb } from "@/lib/db"
-import { HeroPost } from "@/components/hero-post"
+import { HeroPost, type HeroPostProps } from "@/components/hero-post"
 import { PostCard } from "@/components/post-card"
 import { LatestSidebar } from "@/components/latest-sidebar"
 import { NewsletterForm } from "@/components/newsletter-form"
@@ -18,7 +18,7 @@ async function getFeaturedPost() {
     ORDER BY p.created_at DESC
     LIMIT 1
   `
-  return posts[0] || null
+  return (posts[0] as HeroPostProps["post"] | undefined) || null
 }
 
 async function getRecentPosts(excludeId?: number) {

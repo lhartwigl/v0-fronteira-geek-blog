@@ -86,7 +86,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-      <div className="w-full max-w-4xl max-h-[85vh] bg-card border border-border rounded-xl shadow-2xl flex flex-col mx-4">
+      <div className="min-w-0 w-full max-w-4xl max-h-[calc(100dvh-2rem)] sm:max-h-[85dvh] bg-card border border-border rounded-xl shadow-2xl flex flex-col mx-4">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
           <h2 className="font-heading text-lg font-bold text-foreground">Media Gallery</h2>
@@ -101,7 +101,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
         </div>
 
         {/* Search & Upload */}
-        <div className="flex items-center gap-3 p-4 border-b border-border shrink-0">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-b border-border shrink-0">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
@@ -128,7 +128,7 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
         {/* Gallery Grid */}
         <div className="flex-1 overflow-y-auto p-4">
           {mediaItems.length > 0 ? (
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 min-[400px]:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
               {mediaItems.map((item) => (
                 <button
                   key={item.id}
@@ -169,8 +169,8 @@ export function MediaGalleryModal({ onSelect, onClose }: MediaGalleryModalProps)
         </div>
 
         {/* Pagination & Select */}
-        <div className="flex items-center justify-between p-4 border-t border-border shrink-0">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 border-t border-border shrink-0">
+          <div className="flex flex-wrap items-center gap-2">
             {totalPages > 1 && (
               <>
                 <button

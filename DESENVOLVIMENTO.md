@@ -10,7 +10,7 @@ Esta copia esta conectada ao repositorio `lhartwigl/v0-fronteira-geek-blog`.
 
 1. Abra **Terminal > Novo Terminal** no VS Code.
 2. Execute `npm run dev`.
-3. Abra http://localhost:3000. O painel fica em http://localhost:3000/admin/login.
+3. Abra o endereco exibido no terminal. A previa de desenvolvimento desta revisao esta em http://127.0.0.1:3001 e o painel em http://127.0.0.1:3001/admin/login. A porta 3000 estava ocupada por uma compilacao antiga.
 4. Salve os arquivos que alterar: o navegador de desenvolvimento recebe as atualizacoes automaticamente.
 
 O ChatGPT deste chat pode editar os mesmos arquivos. Basta descrever a pagina e a mudanca desejada. Em outro chat, selecione esta pasta como projeto ou informe seu caminho.

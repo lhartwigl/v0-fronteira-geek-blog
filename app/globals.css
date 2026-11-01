@@ -84,3 +84,68 @@
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
+
+/* Keep imported article content and editor embeds within the reading column. */
+.article-content,
+.tiptap {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.article-content img,
+.article-content video,
+.tiptap video {
+  max-width: 100%;
+  height: auto;
+}
+
+.article-content iframe,
+.tiptap iframe {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.article-content [data-youtube-video],
+.tiptap [data-youtube-video] {
+  max-width: 100%;
+}
+
+.article-content table,
+.tiptap table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.article-content pre,
+.tiptap pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 767px) {
+  input:not([type='checkbox']):not([type='radio']):not([type='file']),
+  select,
+  textarea {
+    min-width: 0;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  button,
+  label:has(input[type='file']) {
+    min-height: 44px;
+  }
+
+  [contenteditable='true'] {
+    font-size: 16px;
+  }
+}
+
+.media-actions { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .media-actions { opacity: 0; }
+  .group:hover .media-actions,
+  .group:focus-within .media-actions { opacity: 1; }
+}

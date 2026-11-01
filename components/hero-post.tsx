@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Clock } from "lucide-react"
 
-interface HeroPostProps {
+export interface HeroPostProps {
   post: {
     id: number
     title: string
@@ -23,7 +23,7 @@ export function HeroPost({ post }: HeroPostProps) {
   const imageUrl = post.hero_image_url || post.thumbnail_url
 
   return (
-    <Link href={`/post/${post.slug}`} className="group block relative rounded-lg overflow-hidden aspect-[21/9] min-h-[320px]">
+    <Link href={`/post/${post.slug}`} className="group block relative w-full min-w-0 rounded-lg overflow-hidden md:aspect-[21/9] md:min-h-[320px]">
       {imageUrl ? (
         <Image
           src={imageUrl}
@@ -39,13 +39,13 @@ export function HeroPost({ post }: HeroPostProps) {
         </div>
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+      <div className="relative px-5 pb-5 pt-40 md:absolute md:bottom-0 md:left-0 md:right-0 md:p-10">
         {post.category_name && (
           <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider bg-primary text-primary-foreground rounded mb-3">
             {post.category_name}
           </span>
         )}
-        <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance max-w-3xl">
+        <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance break-words max-w-3xl">
           {post.title}
         </h2>
         {post.excerpt && (
@@ -53,7 +53,7 @@ export function HeroPost({ post }: HeroPostProps) {
             {post.excerpt}
           </p>
         )}
-        <div className="mt-3 flex items-center gap-3 text-xs text-muted-foreground">
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted-foreground">
           {post.author_name && (
             <span className="flex items-center gap-2">
               {post.author_avatar ? (

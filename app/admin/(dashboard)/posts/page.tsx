@@ -45,24 +45,24 @@ export default function AdminPostsPage() {
       ) : (
         <div className="bg-card border border-border rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full table-fixed md:table-auto">
               <thead>
                 <tr className="border-b border-border">
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Post</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Categoria</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden md:table-cell">Autor</th>
-                  <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden sm:table-cell">Status</th>
+                  <th className="w-24 md:w-auto text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden sm:table-cell">Status</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Data</th>
                   <th className="text-left text-xs font-medium text-muted-foreground uppercase tracking-wider p-4 hidden lg:table-cell">Cliques</th>
-                  <th className="text-right text-xs font-medium text-muted-foreground uppercase tracking-wider p-4">Acoes</th>
+                  <th className="w-28 md:w-auto text-right text-xs font-medium text-muted-foreground uppercase tracking-wider p-3 sm:p-4">Acoes</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
                 {data.posts.map((post: Record<string, unknown>) => (
                   <tr key={post.id as number} className="hover:bg-secondary/30 transition-colors">
-                    <td className="p-4">
+                    <td className="p-3 sm:p-4">
                       <div className="flex items-center gap-3">
-                        <div className="relative w-12 h-12 rounded overflow-hidden shrink-0 bg-secondary">
+                        <div className="hidden sm:block relative w-12 h-12 rounded overflow-hidden shrink-0 bg-secondary">
                           {post.thumbnail_url ? (
                             <Image
                               src={post.thumbnail_url as string}
@@ -76,10 +76,11 @@ export default function AdminPostsPage() {
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-medium text-foreground truncate max-w-xs">
+                          <p className="text-sm font-medium text-foreground break-words line-clamp-3 sm:line-clamp-none sm:truncate sm:max-w-xs">
                             {post.title as string}
                           </p>
-                          {post.featured && (
+                          <p className="sm:hidden mt-1 text-xs text-muted-foreground break-words">{post.status === "published" ? "Publicado" : "Rascunho"}{post.category_name ? ` · ${post.category_name}` : ""}</p>
+                          {Boolean(post.featured) && (
                             <span className="text-xs text-accent font-medium">Featured</span>
                           )}
                         </div>
@@ -120,11 +121,11 @@ export default function AdminPostsPage() {
                         {((post.clicks as number) || 0).toLocaleString()}
                       </span>
                     </td>
-                    <td className="p-4 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="p-2 sm:p-4 text-right">
+                      <div className="flex items-center justify-end gap-1 md:gap-2">
                         <Link
                           href={`/admin/posts/${post.id}/edit`}
-                          className="p-2 text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-secondary"
+                          className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-secondary"
                           aria-label="Edit post"
                         >
                           <Pencil className="h-4 w-4" />
@@ -132,7 +133,7 @@ export default function AdminPostsPage() {
                         <button
                           type="button"
                           onClick={() => handleDelete(post.id as number)}
-                          className="p-2 text-muted-foreground hover:text-destructive transition-colors rounded-md hover:bg-secondary"
+                          className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-destructive transition-colors rounded-md hover:bg-secondary"
                           aria-label="Delete post"
                         >
                           <Trash2 className="h-4 w-4" />

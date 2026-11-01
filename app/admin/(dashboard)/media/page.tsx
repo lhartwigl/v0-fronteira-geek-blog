@@ -137,11 +137,11 @@ export default function AdminMediaPage() {
             <div key={item.id} className="group bg-card border border-border rounded-lg overflow-hidden">
               <div className="aspect-video relative">
                 <img src={item.url} alt={item.filename} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <div className="media-actions absolute inset-0 bg-background/60 transition-opacity flex items-center justify-center gap-2">
                   <button
                     type="button"
                     onClick={() => copyUrl(item.url)}
-                    className="p-2 bg-card/90 border border-border rounded-md text-foreground hover:text-primary transition-colors"
+                    className="flex h-11 w-11 items-center justify-center bg-card/90 border border-border rounded-md text-foreground hover:text-primary transition-colors"
                     title="Copiar URL"
                   >
                     {copied === item.url ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
@@ -150,7 +150,7 @@ export default function AdminMediaPage() {
                     type="button"
                     onClick={() => handleDelete(item)}
                     disabled={deleting === item.id}
-                    className="p-2 bg-card/90 border border-border rounded-md text-foreground hover:text-destructive transition-colors disabled:opacity-50"
+                    className="flex h-11 w-11 items-center justify-center bg-card/90 border border-border rounded-md text-foreground hover:text-destructive transition-colors disabled:opacity-50"
                     title="Excluir"
                   >
                     {deleting === item.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
@@ -174,7 +174,7 @@ export default function AdminMediaPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-3 mt-8">
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
           <button
             type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}

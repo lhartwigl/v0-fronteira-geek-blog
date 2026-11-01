@@ -37,8 +37,8 @@ export default function AdminCategoriesPage() {
     <div>
       <h1 className="font-heading text-2xl font-bold text-foreground mb-8">Categorias</h1>
 
-      <form onSubmit={handleCreate} className="flex items-end gap-3 mb-8">
-        <div className="flex flex-col gap-1.5 flex-1 max-w-sm">
+      <form onSubmit={handleCreate} className="flex flex-col sm:flex-row sm:items-end gap-3 mb-8">
+        <div className="flex min-w-0 flex-col gap-1.5 flex-1 max-w-sm">
           <label htmlFor="catname" className="text-sm font-medium text-foreground">Nova Categoria</label>
           <input
             id="catname"

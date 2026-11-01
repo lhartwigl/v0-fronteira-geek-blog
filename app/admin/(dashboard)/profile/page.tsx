@@ -90,7 +90,7 @@ export default function AdminProfilePage() {
         {/* Avatar */}
         <div className="flex flex-col gap-3">
           <span className="text-sm font-medium text-foreground">Profile Picture</span>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-5">
             <div className="relative h-20 w-20 shrink-0 rounded-full bg-secondary border border-border overflow-hidden">
               {currentAvatar ? (
                 <img src={currentAvatar} alt="Avatar" className="w-full h-full object-cover" />
@@ -100,7 +100,7 @@ export default function AdminProfilePage() {
                 </div>
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <label className="inline-flex items-center gap-2 px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground hover:bg-secondary/80 transition-colors cursor-pointer">
                 {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                 Upload
