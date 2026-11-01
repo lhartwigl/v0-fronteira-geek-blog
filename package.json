@@ -6,7 +6,7 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "test": "node --test tests/account-security.test.mjs tests/security-headers.test.mjs",
+    "test": "node --test tests/account-security.test.mjs tests/security-headers.test.mjs tests/editorial.test.mjs tests/editorial-access.test.mjs",
     "lint": "next lint"
   },
   "dependencies": {

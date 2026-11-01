@@ -1,51 +1,30 @@
-import { generateText, Output } from 'ai'
 import { NextResponse } from 'next/server'
 import { authenticated } from '@/lib/access'
+import { consumePublicAttempt } from '@/lib/auth-throttle'
+import { EditorialError, generateArticle } from '@/lib/editorial-ai'
 import { z } from 'zod'
+
+export const maxDuration = 300
+
+const inputSchema = z.object({ title: z.string().trim().min(1).max(300), categoryName: z.string().max(100).optional() })
 
 export async function POST(request: Request) {
   const session = await authenticated(request, false)
   if (session instanceof Response) return session
-
+  let input: z.infer<typeof inputSchema>
+  try { input = inputSchema.parse(await request.json()) }
+  catch { return NextResponse.json({ error: 'Informe um título de até 300 caracteres.' }, { status: 400 }) }
   try {
-    const { title, categoryName } = await request.json()
-
-    if (!title) {
-      return NextResponse.json({ error: 'Title is required' }, { status: 400 })
-    }
-
-    const categoryContext = categoryName ? ` in the ${categoryName} category` : ''
-
-    const result = await generateText({
-      model: 'openai/gpt-4o-mini',
-      output: Output.object({
-        schema: z.object({
-          content: z.string().describe('Full HTML article content with paragraphs, headings (h2, h3), and formatting. 400-800 words.'),
-          excerpt: z.string().describe('A compelling 1-2 sentence excerpt for the article card. Max 160 characters.'),
-          meta_description: z.string().describe('SEO-optimized meta description. Max 155 characters.'),
-          tags: z.array(z.string()).describe('5-8 relevant tags for the article.'),
-        }),
-      }),
-      prompt: `You are a professional geek news writer for "Fronteira Geek", a news portal covering anime, games, Marvel, DC, Star Wars, RPG, and tech.
-
-Write a complete article for the following topic${categoryContext}:
-
-Title: "${title}"
-
-Requirements:
-- Write engaging, informative content in a professional journalism style
-- Use HTML formatting: <p> for paragraphs, <h2> and <h3> for subheadings, <strong> for emphasis, <blockquote> for quotes
-- Include 4-6 paragraphs minimum
-- Make it exciting and relevant for geek culture fans
-- The content should be factual and well-structured
-- Generate a compelling excerpt (max 160 chars)
-- Generate an SEO meta description (max 155 chars)
-- Generate 5-8 relevant tags`,
-    })
-
-    return NextResponse.json(result.output)
+    if (!process.env.OPENAI_API_KEY?.trim()) throw new EditorialError('AI_NOT_CONFIGURED', 503)
+    if (!await consumePublicAttempt(request, `ai:${session.userId}`, 10)) return NextResponse.json({ error: 'Limite temporário de geração. Aguarde alguns minutos.' }, { status: 429, headers: { 'Retry-After': '900' } })
+    const article = await generateArticle({ title: input.title, categoryName: input.categoryName || 'Cultura geek' })
+    return NextResponse.json(article)
   } catch (error) {
-    console.error('AI generation error:', error)
-    return NextResponse.json({ error: 'AI generation failed' }, { status: 500 })
+    const code = error instanceof EditorialError ? error.code : 'AI_UNAVAILABLE'
+    const message = code === 'AI_NOT_CONFIGURED' ? 'A chave da OpenAI ainda não foi configurada.'
+      : code === 'AI_LIMIT_REACHED' ? 'Limite da API atingido. Confira os créditos e tente novamente mais tarde.'
+      : code.startsWith('NO_') ? 'Não encontrei fontes suficientes para produzir este texto. Tente um tema mais específico.'
+      : 'Não foi possível gerar o texto agora. Tente novamente mais tarde.'
+    return NextResponse.json({ error: message }, { status: error instanceof EditorialError ? error.status : 502 })
   }
 }

@@ -33,6 +33,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
   const { data: sessionData } = useSWR('/api/auth/session', fetcher)
   const [saving, setSaving] = useState(false)
   const [generating, setGenerating] = useState(false)
+  const [generationError, setGenerationError] = useState("")
   const [uploading, setUploading] = useState<string | null>(null)
   const [tagsInput, setTagsInput] = useState("")
   const [saveError, setSaveError] = useState('')
@@ -88,6 +89,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
       return
     }
     setGenerating(true)
+    setGenerationError("")
     try {
       const res = await fetch("/api/ai/generate", {
         method: "POST",
@@ -95,6 +97,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         body: JSON.stringify({ title: form.title, categoryName: catData?.categories?.find((c: { id: number }) => c.id === form.category_id)?.name }),
       })
       const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Não foi possível gerar o texto.")
       if (data.content) updateField("content", data.content)
       if (data.excerpt) updateField("excerpt", data.excerpt)
       if (data.meta_description) updateField("meta_description", data.meta_description)
@@ -103,7 +106,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         setTagsInput(data.tags.join(", "))
       }
     } catch (error) {
-      console.error("AI generation error:", error)
+      setGenerationError(error instanceof Error ? error.message : "Não foi possível gerar o texto.")
     } finally {
       setGenerating(false)
     }
@@ -169,6 +172,9 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
         {generating ? "Gerando com IA..." : "Gerar com IA"}
       </button>
+
+      <p className="text-sm text-muted-foreground">A IA pesquisa fontes e preenche o editor. Revise o texto antes de salvar ou publicar.</p>
+      {generationError && <p role="alert" className="text-sm text-destructive">{generationError}</p>}
 
       {/* Category & Status */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

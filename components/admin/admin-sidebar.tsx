@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
-  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, UserCircle, Users,
+  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, UserCircle, Users, Clock,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -16,6 +16,7 @@ const links = [
   { href: "/admin/categories", label: "Categorias", icon: FolderOpen },
   { href: "/admin/media", label: "Midia", icon: ImageIcon },
   { href: "/admin/profile", label: "Perfil", icon: UserCircle },
+  { href: "/admin/automation", label: "Automação", icon: Clock },
 ]
 
 export function AdminSidebar({ userEmail, userRole }: { userEmail: string; userRole: 'ADMIN' | 'AUTHOR' }) {
@@ -45,7 +46,7 @@ export function AdminSidebar({ userEmail, userRole }: { userEmail: string; userR
       </div>
 
       <nav aria-label="Painel administrativo" className="flex-1 min-h-0 overflow-y-auto p-3 flex flex-col gap-1">
-        {[...links, { href: "/admin/users", label: "Equipe", icon: Users }].filter(link => userRole === 'ADMIN' || !['/admin', '/admin/categories', '/admin/users'].includes(link.href)).map((link) => {
+        {[...links, { href: "/admin/users", label: "Equipe", icon: Users }].filter(link => userRole === 'ADMIN' || !['/admin', '/admin/categories', '/admin/users', '/admin/automation'].includes(link.href)).map((link) => {
           const isActive = pathname === link.href || (link.href !== "/admin" && pathname.startsWith(link.href))
           return (
             <Link
