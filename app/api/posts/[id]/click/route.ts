@@ -1,19 +1,23 @@
 import { NextResponse } from "next/server"
 import { getDb } from "@/lib/db"
+import { sameOrigin } from '@/lib/account-security.mjs'
+import { consumePublicAttempt } from '@/lib/auth-throttle'
 
 export async function POST(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!sameOrigin(request)) return NextResponse.json({ error: 'Origem não autorizada.' }, { status: 403 })
   try {
     const { id } = await params
-    const postId = parseInt(id, 10)
-    if (isNaN(postId)) {
+    const postId = Number(id)
+    if (!Number.isSafeInteger(postId) || postId < 1) {
       return NextResponse.json({ error: "Invalid post ID" }, { status: 400 })
     }
+    if (!await consumePublicAttempt(request, 'click', 60)) return NextResponse.json({ error: 'Limite temporário.' }, { status: 429 })
 
     const sql = getDb()
-    await sql`UPDATE posts SET clicks = clicks + 1 WHERE id = ${postId}`
+    await sql`UPDATE posts SET clicks = clicks + 1 WHERE id = ${postId} AND status = 'published'`
 
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -1,7 +1,5 @@
--- Insert a default admin user (password: admin123)
-INSERT INTO users (email, password, name, role) VALUES
-  ('admin@fronteirageek.com', 'admin123', 'Admin', 'ADMIN')
-ON CONFLICT (email) DO NOTHING;
+-- No default administrator accounts are created.
+-- User creation is handled by protected setup and the Team panel; no default credentials.
 
 -- Insert sample featured post
 INSERT INTO posts (title, slug, content, excerpt, category_id, featured, status, reading_time, meta_description, tags, author_id)

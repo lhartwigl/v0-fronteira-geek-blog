@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { getDb } from '@/lib/db'
 import { createSession } from '@/lib/auth'
 import { hashPassword, isPasswordHash, ROLES, sameOrigin, verifyPassword } from '@/lib/account-security.mjs'
-import { consumeLoginAttempt } from '@/lib/auth-throttle'
+import { clientAddress, consumeLoginAttempt } from '@/lib/auth-throttle'
 import { z } from 'zod'
 
 const input = z.object({ email: z.string().trim().email().max(255).transform(value => value.toLowerCase()), password: z.string().min(1).max(128) })
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   try {
     // The platform-provided client IP is used in production; the email bucket
     // is independent of headers and remains enforced for every request.
-    const ip = (request.headers.get('x-vercel-forwarded-for') || request.headers.get('x-forwarded-for') || 'local').split(',')[0].trim().slice(0, 100)
+    const ip = clientAddress(request)
     if (!await consumeLoginAttempt(body.email, ip)) return NextResponse.json({ error: 'Muitas tentativas. Aguarde 15 minutos para tentar novamente.' }, { status: 429, headers: { 'Retry-After': '900' } })
     const sql = getDb()
     const rows = await sql`SELECT id, email, password, role, updated_at::text AS auth_version FROM users WHERE lower(email) = ${body.email}`

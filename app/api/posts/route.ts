@@ -1,13 +1,20 @@
 import { NextResponse } from 'next/server'
 import { getDb } from '@/lib/db'
+import { z } from 'zod'
+
+const pagination = z.object({
+  page: z.coerce.number().int().min(1).max(10000),
+  limit: z.coerce.number().int().min(1).max(48),
+  search: z.string().trim().max(200).nullable(),
+  category: z.string().max(100).nullable(),
+})
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const page = Number(searchParams.get('page') || '1')
-    const limit = Number(searchParams.get('limit') || '12')
-    const category = searchParams.get('category')
-    const search = searchParams.get('search')
+    const parsed = pagination.safeParse({ page: searchParams.get('page') || '1', limit: searchParams.get('limit') || '12', search: searchParams.get('search'), category: searchParams.get('category') })
+    if (!parsed.success) return NextResponse.json({ error: 'Parâmetros de busca inválidos.' }, { status: 400 })
+    const { page, limit, category, search } = parsed.data
     const offset = (page - 1) * limit
 
     const sql = getDb()

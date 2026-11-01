@@ -4,6 +4,7 @@ import React from "react"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { Brand } from '@/components/brand'
 
 export default function AdminLoginPage() {
   const router = useRouter()
@@ -64,7 +65,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <h1 className="font-heading text-2xl font-bold text-foreground">
-            <span className="text-primary">Fronteira</span> Geek
+            <Brand />
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
             {available ? "Entre no painel da equipe" : "O painel está indisponível. Entre em contato com o responsável pelo site."}

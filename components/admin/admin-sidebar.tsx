@@ -3,10 +3,11 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
-  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, ChevronLeft, UserCircle, Users,
+  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, UserCircle, Users,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Brand } from '@/components/brand'
 
 const links = [
   { href: "/admin", label: "Painel", icon: LayoutDashboard },
@@ -39,11 +40,7 @@ export function AdminSidebar({ userEmail, userRole }: { userEmail: string; userR
     <div className="flex min-h-0 flex-col h-full">
       <div className="shrink-0 p-4 pr-16 border-b border-border">
         <Link href="/" className="flex items-center gap-2">
-          <ChevronLeft className="h-4 w-4 text-muted-foreground" />
-          <span className="font-heading text-lg font-bold">
-            <span className="text-primary">FG</span>{" "}
-            <span className="text-foreground">Admin</span>
-          </span>
+          <Brand compact />
         </Link>
       </div>
 
@@ -86,7 +83,7 @@ export function AdminSidebar({ userEmail, userRole }: { userEmail: string; userR
   return (
     <>
       <div className="lg:hidden sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-border bg-card px-4">
-        <Link href="/admin" className="font-heading text-lg font-bold"><span className="text-primary">FG</span> Admin</Link>
+        <Link href="/admin" className="inline-flex"><Brand /></Link>
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
             <button type="button" className="flex h-11 w-11 items-center justify-center rounded-md border border-border text-foreground" aria-label="Abrir menu administrativo">

@@ -4,6 +4,8 @@ import { authenticated } from '@/lib/access'
 import { slugify } from '@/lib/slugify'
 
 export async function GET(request: Request) {
+  const session = await authenticated(request)
+  if (session instanceof Response) return session
   const sql = getDb()
   const categories = await sql`SELECT * FROM categories ORDER BY name`
   return NextResponse.json({ categories })

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Brand } from './brand'
 
 export function SiteFooter() {
   return (
@@ -7,12 +8,11 @@ export function SiteFooter() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <Link href="/" className="flex items-center gap-2">
-              <span className="font-heading text-lg font-bold text-primary">Fronteira</span>
-              <span className="font-heading text-lg font-bold text-foreground">Geek</span>
+              <Brand />
             </Link>
             <p className="text-sm text-muted-foreground mt-2">Sua dose diaria de noticias geek.</p>
           </div>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
             <Link href="/category/anime" className="hover:text-primary transition-colors">Anime</Link>
             <Link href="/category/games" className="hover:text-primary transition-colors">Games</Link>
             <Link href="/category/marvel" className="hover:text-primary transition-colors">Marvel</Link>

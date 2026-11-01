@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Menu, X, Search } from "lucide-react"
+import { Brand } from './brand'
 
 const categories = [
   { name: "Destaques", slug: "trending" },
@@ -29,12 +30,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
       <div className="mx-auto max-w-7xl flex items-center justify-between px-4 h-16">
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-heading text-xl font-bold tracking-tight text-primary">
-            Fronteira
-          </span>
-          <span className="font-heading text-xl font-bold tracking-tight text-foreground">
-            Geek
-          </span>
+          <Brand />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1">

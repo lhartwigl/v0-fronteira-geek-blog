@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
+import { headers } from 'next/headers'
 
 import './globals.css'
 
@@ -25,11 +26,13 @@ export const viewport: Viewport = {
   themeColor: '#0f1318',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Request-specific rendering lets Next attach the CSP nonce to its scripts.
+  await headers()
   return (
     <html lang="pt-BR" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body suppressHydrationWarning className="font-sans antialiased min-h-screen">{children}</body>

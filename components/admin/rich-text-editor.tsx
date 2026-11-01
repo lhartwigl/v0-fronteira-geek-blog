@@ -53,6 +53,8 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
     extensions: [
       StarterKit.configure({
         heading: { levels: [1, 2, 3] },
+        link: false,
+        underline: false,
       }),
       ImageExtension.configure({
         HTMLAttributes: { class: "rounded-lg max-w-full" },
@@ -88,7 +90,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
 
   useEffect(() => {
     if (editor && content && editor.getHTML() !== content) {
-      editor.commands.setContent(content)
+      editor.commands.setContent(content, { emitUpdate: false })
     }
   }, [content, editor])
 
