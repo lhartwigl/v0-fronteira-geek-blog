@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react"
 import useSWR from "swr"
 import { Upload, Loader2, Save, User, X } from "lucide-react"
+import { PasswordForm } from '@/components/admin/password-form'
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
@@ -172,6 +173,7 @@ export default function AdminProfilePage() {
           </button>
         </div>
       </div>
+      <PasswordForm />
     </div>
   )
 }

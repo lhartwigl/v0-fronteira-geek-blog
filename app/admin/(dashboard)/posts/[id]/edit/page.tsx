@@ -16,7 +16,7 @@ export default function EditPostPage() {
   }
 
   if (!data?.post) {
-    return <p className="text-destructive py-8">Post not found.</p>
+    return <p role="alert" className="text-destructive py-8">{data?.error || 'Matéria não encontrada.'}</p>
   }
 
   return (

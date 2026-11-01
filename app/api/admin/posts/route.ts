@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server'
 import { getDb } from '@/lib/db'
-import { getSession } from '@/lib/auth'
+import { authenticated } from '@/lib/access'
 import { slugify } from '@/lib/slugify'
 import { readingTime } from '@/lib/format'
+import { postInput } from '@/lib/post-input'
+import { cleanContent } from '@/lib/content-security'
 
-export async function GET() {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+export async function GET(request: Request) {
+  const session = await authenticated(request, false)
+  if (session instanceof Response) return session
 
   const sql = getDb()
   const posts = await sql`
@@ -15,17 +17,21 @@ export async function GET() {
     FROM posts p
     LEFT JOIN categories c ON p.category_id = c.id
     LEFT JOIN users u ON p.author_id = u.id
+    WHERE ${session.role} = 'ADMIN' OR p.author_id = ${session.userId}
     ORDER BY p.created_at DESC
   `
   return NextResponse.json({ posts })
 }
 
 export async function POST(request: Request) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const session = await authenticated(request, false)
+  if (session instanceof Response) return session
 
   try {
-    const body = await request.json()
+    const parsed = postInput.safeParse(await request.json())
+    if (!parsed.success) return NextResponse.json({ error: 'Confira os campos da matéria.' }, { status: 400 })
+    const body = { ...parsed.data, content: cleanContent(parsed.data.content) }
+    if (session.role !== 'ADMIN' && (body.status !== 'draft' || body.featured)) return NextResponse.json({ error: 'Somente administradores podem publicar ou destacar matérias.' }, { status: 403 })
     const {
       title, content, excerpt, thumbnail_url, hero_image_url,
       category_id, featured, status, meta_description, tags,

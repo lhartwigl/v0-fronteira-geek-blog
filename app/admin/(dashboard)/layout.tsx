@@ -9,7 +9,7 @@ export default async function AdminDashboardLayout({ children }: { children: Rea
 
   return (
     <div className="min-h-screen bg-background flex flex-col lg:flex-row">
-      <AdminSidebar userEmail={session.email} />
+      <AdminSidebar userEmail={session.email} userRole={session.role} />
       <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8">
         {children}
       </main>

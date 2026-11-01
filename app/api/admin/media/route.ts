@@ -1,13 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { del } from "@vercel/blob"
-import { getSession } from "@/lib/auth"
+import { authenticated } from '@/lib/access'
 import { getDb } from "@/lib/db"
 
 export async function GET(request: NextRequest) {
-  const session = await getSession()
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
+  const session = await authenticated(request, false)
+  if (session instanceof Response) return session
 
   const sql = getDb()
   const { searchParams } = new URL(request.url)
@@ -23,22 +21,23 @@ export async function GET(request: NextRequest) {
       media = await sql`
         SELECT id, url, filename, mimetype, size, created_at
         FROM media
-        WHERE filename ILIKE ${"%" + search + "%"}
+        WHERE filename ILIKE ${"%" + search + "%"} AND (${session.role} = 'ADMIN' OR uploaded_by = ${session.userId})
         ORDER BY created_at DESC
         LIMIT ${limit} OFFSET ${offset}
       `
       countResult = await sql`
         SELECT COUNT(*)::int as total FROM media
-        WHERE filename ILIKE ${"%" + search + "%"}
+        WHERE filename ILIKE ${"%" + search + "%"} AND (${session.role} = 'ADMIN' OR uploaded_by = ${session.userId})
       `
     } else {
       media = await sql`
         SELECT id, url, filename, mimetype, size, created_at
         FROM media
+        WHERE ${session.role} = 'ADMIN' OR uploaded_by = ${session.userId}
         ORDER BY created_at DESC
         LIMIT ${limit} OFFSET ${offset}
       `
-      countResult = await sql`SELECT COUNT(*)::int as total FROM media`
+      countResult = await sql`SELECT COUNT(*)::int as total FROM media WHERE ${session.role} = 'ADMIN' OR uploaded_by = ${session.userId}`
     }
 
     return NextResponse.json({
@@ -54,25 +53,23 @@ export async function GET(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const session = await getSession()
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
+  const session = await authenticated(request, true)
+  if (session instanceof Response) return session
 
   try {
-    const { id, url } = await request.json()
-    if (!id || !url) {
+    const { id } = await request.json()
+    if (!Number.isSafeInteger(id) || id < 1) {
       return NextResponse.json({ error: "Missing id or url" }, { status: 400 })
     }
 
+    const sql = getDb()
+    const removed = await sql`DELETE FROM media WHERE id = ${id} AND (${session.role} = 'ADMIN' OR uploaded_by = ${session.userId}) RETURNING url`
+    if (!removed.length) return NextResponse.json({ error: 'Arquivo não encontrado ou acesso não autorizado.' }, { status: 403 })
     try {
-      await del(url)
+      await del(removed[0].url)
     } catch {
       // Continue even if blob delete fails
     }
-
-    const sql = getDb()
-    await sql`DELETE FROM media WHERE id = ${id}`
 
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server'
 import { getDb } from '@/lib/db'
-import { getSession } from '@/lib/auth'
+import { authenticated } from '@/lib/access'
 import { slugify } from '@/lib/slugify'
 
-export async function GET() {
+export async function GET(request: Request) {
   const sql = getDb()
   const categories = await sql`SELECT * FROM categories ORDER BY name`
   return NextResponse.json({ categories })
 }
 
 export async function POST(request: Request) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const session = await authenticated(request, true)
+  if (session instanceof Response) return session
 
   try {
     const { name } = await request.json()

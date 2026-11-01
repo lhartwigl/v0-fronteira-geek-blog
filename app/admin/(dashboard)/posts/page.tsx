@@ -10,6 +10,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export default function AdminPostsPage() {
   const { data, isLoading } = useSWR("/api/admin/posts", fetcher)
+  const { data: sessionData } = useSWR('/api/auth/session', fetcher)
 
   async function handleDelete(id: number) {
     if (!confirm("Tem certeza que deseja excluir este post?")) return
@@ -123,6 +124,7 @@ export default function AdminPostsPage() {
                     </td>
                     <td className="p-2 sm:p-4 text-right">
                       <div className="flex items-center justify-end gap-1 md:gap-2">
+                        {(sessionData?.user?.role === 'ADMIN' || post.status === 'draft') && <>
                         <Link
                           href={`/admin/posts/${post.id}/edit`}
                           className="inline-flex h-11 w-11 shrink-0 items-center justify-center text-muted-foreground hover:text-primary transition-colors rounded-md hover:bg-secondary"
@@ -138,6 +140,7 @@ export default function AdminPostsPage() {
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
+                        </>}
                       </div>
                     </td>
                   </tr>

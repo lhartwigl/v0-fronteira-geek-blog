@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
-  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, ChevronLeft, UserCircle,
+  LayoutDashboard, FileText, PenSquare, FolderOpen, ImageIcon, LogOut, Menu, ChevronLeft, UserCircle, Users,
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
@@ -17,7 +17,7 @@ const links = [
   { href: "/admin/profile", label: "Perfil", icon: UserCircle },
 ]
 
-export function AdminSidebar({ userEmail }: { userEmail: string }) {
+export function AdminSidebar({ userEmail, userRole }: { userEmail: string; userRole: 'ADMIN' | 'AUTHOR' }) {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -48,7 +48,7 @@ export function AdminSidebar({ userEmail }: { userEmail: string }) {
       </div>
 
       <nav aria-label="Painel administrativo" className="flex-1 min-h-0 overflow-y-auto p-3 flex flex-col gap-1">
-        {links.map((link) => {
+        {[...links, { href: "/admin/users", label: "Equipe", icon: Users }].filter(link => userRole === 'ADMIN' || !['/admin', '/admin/categories', '/admin/users'].includes(link.href)).map((link) => {
           const isActive = pathname === link.href || (link.href !== "/admin" && pathname.startsWith(link.href))
           return (
             <Link

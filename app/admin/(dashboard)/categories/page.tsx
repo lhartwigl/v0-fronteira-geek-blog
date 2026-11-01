@@ -10,6 +10,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export default function AdminCategoriesPage() {
   const { data, isLoading } = useSWR("/api/admin/categories", fetcher)
+  const { data: session } = useSWR('/api/auth/session', fetcher)
   const [name, setName] = useState("")
   const [creating, setCreating] = useState(false)
 
@@ -32,6 +33,9 @@ export default function AdminCategoriesPage() {
     await fetch(`/api/admin/categories/${id}`, { method: "DELETE" })
     mutate("/api/admin/categories")
   }
+
+  if (!session?.user) return <p className="text-muted-foreground">Carregando acesso...</p>
+  if (session.user.role !== 'ADMIN') return <p role="alert">Acesso exclusivo do administrador.</p>
 
   return (
     <div>

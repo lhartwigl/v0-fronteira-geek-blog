@@ -7,6 +7,7 @@ import { timeAgo } from "@/lib/format"
 import { PostCard } from "@/components/post-card"
 import { TrackClick } from "@/components/track-click"
 import type { Metadata } from "next"
+import { cleanContent } from "@/lib/content-security"
 
 export const dynamic = "force-dynamic"
 
@@ -153,7 +154,7 @@ export default async function PostPage({ params }: Props) {
           prose-img:rounded-lg
           [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:rounded-lg [&_iframe]:border-0
           [&_u]:underline [&_u]:decoration-primary/50"
-        dangerouslySetInnerHTML={{ __html: post.content as string }}
+        dangerouslySetInnerHTML={{ __html: cleanContent((post.content as string) || '') }}
       />
 
       {(post.tags as string[])?.length > 0 && (

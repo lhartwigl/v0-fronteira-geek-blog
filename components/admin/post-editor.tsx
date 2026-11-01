@@ -30,10 +30,13 @@ interface PostEditorProps {
 export function PostEditor({ initialData, postId }: PostEditorProps) {
   const router = useRouter()
   const { data: catData } = useSWR("/api/admin/categories", fetcher)
+  const { data: sessionData } = useSWR('/api/auth/session', fetcher)
   const [saving, setSaving] = useState(false)
   const [generating, setGenerating] = useState(false)
   const [uploading, setUploading] = useState<string | null>(null)
   const [tagsInput, setTagsInput] = useState("")
+  const [saveError, setSaveError] = useState('')
+  const isAdmin = sessionData?.user?.role === 'ADMIN'
 
   const [form, setForm] = useState<PostData>({
     title: "",
@@ -107,6 +110,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
   }, [form.title, form.category_id, catData])
 
   async function handleSave(status?: string) {
+    setSaveError('')
     setSaving(true)
     const payload = {
       ...form,
@@ -126,13 +130,19 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
       if (res.ok) {
         router.push("/admin/posts")
         router.refresh()
+      } else {
+        const result = await res.json()
+        setSaveError(result.error || 'Não foi possível salvar a matéria.')
       }
     } catch (error) {
-      console.error("Save error:", error)
+      setSaveError('Não foi possível salvar a matéria. Tente novamente.')
     } finally {
       setSaving(false)
     }
   }
+
+  if (!sessionData?.user) return <p className="text-muted-foreground">Carregando acesso...</p>
+  if (!isAdmin && initialData?.status === 'published') return <p className="text-muted-foreground">Esta matéria já foi publicada. Peça a um administrador para realizar alterações.</p>
 
   return (
     <div className="flex flex-col gap-6 max-w-4xl">
@@ -185,13 +195,13 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
             className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <option value="draft">Rascunho</option>
-            <option value="published">Publicado</option>
+            {isAdmin && <option value="published">Publicado</option>}
           </select>
         </div>
       </div>
 
       {/* Featured */}
-      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+      {isAdmin && <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
         <input
           type="checkbox"
           checked={form.featured}
@@ -199,7 +209,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           className="rounded border-border text-primary focus:ring-primary"
         />
         Post em destaque (aparece na secao principal)
-      </label>
+      </label>}
 
       {/* Image Uploads */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -274,15 +284,16 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
         >
           Save as Draft
         </button>
-        <button
+        {isAdmin && <button
           type="button"
           onClick={() => handleSave("published")}
           disabled={saving}
           className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
           {saving ? "Saving..." : "Publish"}
-        </button>
+        </button>}
       </div>
+      {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
     </div>
   )
 }

@@ -18,6 +18,7 @@ interface MediaItem {
 }
 
 export default function AdminMediaPage() {
+  const { data: sessionData } = useSWR('/api/auth/session', fetcher)
   const [uploading, setUploading] = useState(false)
   const [copied, setCopied] = useState<string | null>(null)
   const [deleting, setDeleting] = useState<number | null>(null)
@@ -146,7 +147,7 @@ export default function AdminMediaPage() {
                   >
                     {copied === item.url ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </button>
-                  <button
+                  {sessionData?.user?.role === 'ADMIN' && <button
                     type="button"
                     onClick={() => handleDelete(item)}
                     disabled={deleting === item.id}
@@ -154,7 +155,7 @@ export default function AdminMediaPage() {
                     title="Excluir"
                   >
                     {deleting === item.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-                  </button>
+                  </button>}
                 </div>
               </div>
               <div className="p-3">

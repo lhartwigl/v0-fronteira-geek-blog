@@ -9,20 +9,19 @@ export default function AdminLoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const [isSetup, setIsSetup] = useState(false)
+  const [available, setAvailable] = useState(true)
   const [checkingSetup, setCheckingSetup] = useState(true)
 
   useEffect(() => {
     fetch("/api/auth/setup")
-      .then((r) => r.json())
+      .then(async (r) => { if (!r.ok) throw new Error(); return r.json() })
       .then((data) => {
-        setIsSetup(!data.hasAdmin)
+        setAvailable(data.hasAdmin)
         setCheckingSetup(false)
       })
-      .catch(() => setCheckingSetup(false))
+      .catch(() => { setAvailable(false); setCheckingSetup(false) })
   }, [])
 
   async function handleSubmit(e: React.FormEvent) {
@@ -31,21 +30,6 @@ export default function AdminLoginPage() {
     setLoading(true)
 
     try {
-      if (isSetup) {
-        const res = await fetch("/api/auth/setup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password, name }),
-        })
-        if (!res.ok) {
-          const data = await res.json()
-          setError(data.error || "Setup failed")
-          setLoading(false)
-          return
-        }
-        setIsSetup(false)
-      }
-
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,24 +67,11 @@ export default function AdminLoginPage() {
             <span className="text-primary">Fronteira</span> Geek
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
-            {isSetup ? "Crie sua conta de administrador" : "Entre no painel administrativo"}
+            {available ? "Entre no painel da equipe" : "O painel está indisponível. Entre em contato com o responsável pelo site."}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-card border border-border rounded-lg p-6 flex flex-col gap-4">
-          {isSetup && (
-            <div className="flex flex-col gap-1.5">
-              <label htmlFor="name" className="text-sm font-medium text-foreground">Nome</label>
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="px-3 py-2 bg-secondary border border-border rounded-md text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Seu nome"
-              />
-            </div>
-          )}
           <div className="flex flex-col gap-1.5">
             <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
             <input
@@ -130,10 +101,10 @@ export default function AdminLoginPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || !available}
             className="mt-2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
           >
-            {loading ? "Carregando..." : isSetup ? "Criar Conta e Entrar" : "Entrar"}
+            {loading ? "Carregando..." : "Entrar"}
           </button>
         </form>
       </div>

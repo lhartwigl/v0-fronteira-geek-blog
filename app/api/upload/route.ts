@@ -1,13 +1,11 @@
 import { put } from '@vercel/blob'
 import { NextResponse, type NextRequest } from 'next/server'
-import { getSession } from '@/lib/auth'
+import { authenticated } from '@/lib/access'
 import { getDb } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
-  const session = await getSession()
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const session = await authenticated(request, false)
+  if (session instanceof Response) return session
 
   try {
     const formData = await request.formData()
@@ -15,6 +13,9 @@ export async function POST(request: NextRequest) {
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 })
+    }
+    if (!(file instanceof File) || !['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'].includes(file.type) || file.size > 4 * 1024 * 1024) {
+      return NextResponse.json({ error: 'Envie uma imagem JPG, PNG, WebP, GIF ou AVIF de até 4 MB.' }, { status: 400 })
     }
 
     const blob = await put(`fronteira-geek/${Date.now()}-${file.name}`, file, {

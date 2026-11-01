@@ -1,10 +1,15 @@
 import { getDb } from "@/lib/db"
 import { FileText, Eye, Layers, Users, MousePointerClick } from "lucide-react"
 import Link from "next/link"
+import { getSession } from "@/lib/auth"
+import { redirect } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
 export default async function AdminDashboard() {
+  const session = await getSession()
+  if (!session) redirect('/admin/login')
+  if (session.role !== 'ADMIN') redirect('/admin/posts')
   const sql = getDb()
 
   const [postsCount, publishedCount, categoriesCount, subscribersCount, totalClicks, recentPosts] = await Promise.all([

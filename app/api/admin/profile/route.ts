@@ -1,12 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { getSession } from "@/lib/auth"
+import { authenticated } from '@/lib/access'
 import { getDb } from "@/lib/db"
 
-export async function GET() {
-  const session = await getSession()
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
+export async function GET(request: Request) {
+  const session = await authenticated(request, false)
+  if (session instanceof Response) return session
 
   const sql = getDb()
   const users = await sql`
@@ -21,15 +19,13 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
-  const session = await getSession()
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-  }
+  const session = await authenticated(request, false)
+  if (session instanceof Response) return session
 
   try {
     const { name, bio, avatar_url } = await request.json()
 
-    if (!name || name.trim().length === 0) {
+    if (typeof name !== 'string' || !name.trim() || name.length > 255 || (bio && (typeof bio !== 'string' || bio.length > 300)) || (avatar_url && (typeof avatar_url !== 'string' || avatar_url.length > 2048 || !avatar_url.startsWith('https://')))) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 })
     }
 

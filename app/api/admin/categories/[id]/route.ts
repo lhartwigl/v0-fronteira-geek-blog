@@ -1,10 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { getDb } from '@/lib/db'
-import { getSession } from '@/lib/auth'
+import { authenticated } from '@/lib/access'
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const session = await authenticated(request, true)
+  if (session instanceof Response) return session
 
   try {
     const { id } = await params
