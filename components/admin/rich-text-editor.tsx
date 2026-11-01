@@ -126,6 +126,7 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   return (
     <div className="flex min-w-0 flex-col">
       {/* Toolbar */}
+      <div className="sticky top-16 z-30 lg:top-0">
       <div className="flex flex-wrap items-center gap-0.5 p-2 bg-secondary border border-border rounded-t-md">
         {/* Text formatting */}
         <ToolbarGroup>
@@ -365,6 +366,8 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
           </button>
         </div>
       )}
+
+      </div>
 
       {/* Editor */}
       <EditorContent editor={editor} />

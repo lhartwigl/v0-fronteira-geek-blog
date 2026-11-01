@@ -288,7 +288,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           disabled={saving}
           className="px-4 py-2 bg-secondary text-secondary-foreground text-sm font-medium rounded-md hover:bg-secondary/80 transition-colors disabled:opacity-50"
         >
-          Save as Draft
+          Salvar como rascunho
         </button>
         {isAdmin && <button
           type="button"
@@ -296,7 +296,7 @@ export function PostEditor({ initialData, postId }: PostEditorProps) {
           disabled={saving}
           className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
-          {saving ? "Saving..." : "Publish"}
+          {saving ? "Salvando..." : initialData?.status === "published" ? "Salvar alterações" : "Publicar"}
         </button>}
       </div>
       {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
