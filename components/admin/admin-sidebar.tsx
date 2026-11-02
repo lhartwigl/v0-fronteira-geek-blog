@@ -15,7 +15,7 @@ const links = [
   { href: "/admin/posts/new", label: "Criar Post", icon: PenSquare },
   { href: "/admin/categories", label: "Categorias", icon: FolderOpen },
   { href: "/admin/media", label: "Midia", icon: ImageIcon },
-  { href: "/admin/traffic", label: "Tr�fego", icon: LayoutDashboard },
+  { href: "/admin/traffic", label: "Tráfego", icon: LayoutDashboard },
   { href: "/admin/profile", label: "Perfil", icon: UserCircle },
   { href: "/admin/automation", label: "Automação", icon: Clock },
 ]
