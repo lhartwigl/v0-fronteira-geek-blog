@@ -15,6 +15,7 @@ const links = [
   { href: "/admin/posts/new", label: "Criar Post", icon: PenSquare },
   { href: "/admin/categories", label: "Categorias", icon: FolderOpen },
   { href: "/admin/media", label: "Midia", icon: ImageIcon },
+  { href: "/admin/traffic", label: "Tr�fego", icon: LayoutDashboard },
   { href: "/admin/profile", label: "Perfil", icon: UserCircle },
   { href: "/admin/automation", label: "Automação", icon: Clock },
 ]
@@ -46,7 +47,7 @@ export function AdminSidebar({ userEmail, userRole }: { userEmail: string; userR
       </div>
 
       <nav aria-label="Painel administrativo" className="flex-1 min-h-0 overflow-y-auto p-3 flex flex-col gap-1">
-        {[...links, { href: "/admin/users", label: "Equipe", icon: Users }].filter(link => userRole === 'ADMIN' || !['/admin', '/admin/categories', '/admin/users', '/admin/automation'].includes(link.href)).map((link) => {
+        {[...links, { href: "/admin/users", label: "Equipe", icon: Users }].filter(link => userRole === 'ADMIN' || !['/admin', '/admin/categories', '/admin/users', '/admin/automation', '/admin/traffic'].includes(link.href)).map((link) => {
           const isActive = pathname === link.href || (link.href !== "/admin" && pathname.startsWith(link.href))
           return (
             <Link

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { getDb } from "@/lib/db"
 import { sameOrigin } from '@/lib/account-security.mjs'
+import { getSession } from '@/lib/auth'
 import { consumePublicAttempt } from '@/lib/auth-throttle'
 
 export async function POST(
@@ -9,6 +10,8 @@ export async function POST(
 ) {
   if (!sameOrigin(request)) return NextResponse.json({ error: 'Origem não autorizada.' }, { status: 403 })
   try {
+    if (await getSession()) return NextResponse.json({ success: true, ignored: true })
+    if (process.env.VERCEL_ENV !== 'production') return NextResponse.json({ success: true, ignored: true })
     const { id } = await params
     const postId = Number(id)
     if (!Number.isSafeInteger(postId) || postId < 1) {
